@@ -26,6 +26,8 @@ export type Sabor = {
   imagem: string;
   /** Preço por tamanho */
   precos: Record<TamanhoId, number>;
+  /** Categoria do sabor: salgado ou doce */
+  categoriaId: "pizzas-salgadas" | "pizzas-doces";
   /** Selo opcional: "Mais vendida", "Promoção"... */
   selo?: string;
 };
@@ -40,7 +42,7 @@ export type Esfiha = {
 };
 
 export type Categoria =
-  | { id: string; nome: string; tipo: "pizza"; itens: Sabor[] }
+  | { id: "pizzas-salgadas" | "pizzas-doces"; nome: string; tipo: "pizza"; itens: Sabor[] }
   | { id: string; nome: string; tipo: "esfiha"; itens: Esfiha[] };
 
 export const tamanhos: Tamanho[] = [
@@ -68,6 +70,7 @@ export const categorias: Categoria[] = [
         descricao: "Molho artesanal, mussarela, calabresa fatiada e cebola",
         imagem: pizzaSalgada,
         precos: { pequena: 39.9, grande: 59.9 },
+        categoriaId: "pizzas-salgadas",
         selo: "Mais vendida",
       },
       {
@@ -76,6 +79,7 @@ export const categorias: Categoria[] = [
         descricao: "Molho artesanal, mussarela e orégano",
         imagem: pizzaSalgada,
         precos: { pequena: 36.9, grande: 54.9 },
+        categoriaId: "pizzas-salgadas",
       },
       {
         id: "portuguesa",
@@ -83,6 +87,7 @@ export const categorias: Categoria[] = [
         descricao: "Presunto, mussarela, ovo, cebola, ervilha e azeitona",
         imagem: pizzaSalgada,
         precos: { pequena: 42.9, grande: 64.9 },
+        categoriaId: "pizzas-salgadas",
       },
       {
         id: "frango-catupiry",
@@ -90,6 +95,7 @@ export const categorias: Categoria[] = [
         descricao: "Frango desfiado temperado com catupiry cremoso",
         imagem: pizzaSalgada,
         precos: { pequena: 44.9, grande: 66.9 },
+        categoriaId: "pizzas-salgadas",
       },
       {
         id: "quatro-queijos",
@@ -97,6 +103,7 @@ export const categorias: Categoria[] = [
         descricao: "Mussarela, provolone, parmesão e gorgonzola",
         imagem: pizzaSalgada,
         precos: { pequena: 45.9, grande: 68.9 },
+        categoriaId: "pizzas-salgadas",
       },
       {
         id: "pepperoni",
@@ -104,6 +111,7 @@ export const categorias: Categoria[] = [
         descricao: "Mussarela e pepperoni levemente apimentado",
         imagem: pizzaSalgada,
         precos: { pequena: 46.9, grande: 69.9 },
+        categoriaId: "pizzas-salgadas",
         selo: "Novidade",
       },
     ],
@@ -119,6 +127,7 @@ export const categorias: Categoria[] = [
         descricao: "Chocolate ao leite derretido com morangos frescos",
         imagem: pizzaDoce,
         precos: { pequena: 42.9, grande: 62.9 },
+        categoriaId: "pizzas-doces",
         selo: "Favorita",
       },
       {
@@ -127,13 +136,15 @@ export const categorias: Categoria[] = [
         descricao: "Brigadeiro cremoso com granulado belga",
         imagem: pizzaDoce,
         precos: { pequena: 39.9, grande: 58.9 },
+        categoriaId: "pizzas-doces",
       },
       {
         id: "romeu-julieta",
         nome: "Romeu e Julieta",
-        descricao: "Mussarela com goiabada cremosa",
+        descricao: "Mussarela with guava paste",
         imagem: pizzaDoce,
         precos: { pequena: 39.9, grande: 58.9 },
+        categoriaId: "pizzas-doces",
       },
     ],
   },

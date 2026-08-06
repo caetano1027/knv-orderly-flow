@@ -137,16 +137,18 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
                 opcional={index > 0}
               >
                 <div className="grid gap-2">
-                  {todosSabores.map((s) => (
-                    <Opcao
-                      key={s.id}
-                      ativo={sabores[index] === s.id}
-                      titulo={s.nome}
-                      subtitulo={s.descricao}
-                      valor={tamanho ? brl(s.precos[tamanho]) : "—"}
-                      onClick={() => alternarSabor(s.id, index)}
-                    />
-                  ))}
+                  {todosSabores
+                    .filter((s) => !principal || s.categoriaId === principal.categoriaId)
+                    .map((s) => (
+                      <Opcao
+                        key={s.id}
+                        ativo={sabores[index] === s.id}
+                        titulo={s.nome}
+                        subtitulo={s.descricao}
+                        valor={tamanho ? brl(s.precos[tamanho]) : "—"}
+                        onClick={() => alternarSabor(s.id, index)}
+                      />
+                    ))}
                 </div>
               </Secao>
             ))}
