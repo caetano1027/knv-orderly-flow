@@ -144,3 +144,18 @@
     display: none;
   }
 }
+
+@utility custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+  }
+}
