@@ -198,7 +198,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
             <span className="truncate">
               {itemEdicao ? "Salvar" : "Adicionar ao pedido"}
             </span>
-            <span className="ml-2 tabular-nums">
+            <span className="ml-2 whitespace-nowrap tabular-nums">
               {total > 0 ? brl(total) : ""}
             </span>
           </button>
