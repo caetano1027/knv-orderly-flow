@@ -102,7 +102,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
         </div>
 
-        <div className="esconder-scroll -mt-8 overflow-y-auto px-5 pb-4">
+        <div className="custom-scroll -mt-8 overflow-y-auto px-5 pb-4">
           <DialogHeader className="space-y-1 text-left">
             <DialogTitle className="text-2xl font-extrabold">
               {principal ? principal.nome : "Monte sua pizza"}
