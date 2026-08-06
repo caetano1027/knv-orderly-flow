@@ -104,12 +104,12 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
             <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
           </div>
 
-          <div className="-mt-12 px-5 pb-6">
-            <DialogHeader className="space-y-1 text-left">
-              <DialogTitle className="text-2xl font-black text-foreground sm:text-3xl">
+          <div className="-mt-14 px-5 pb-6">
+            <DialogHeader className="relative space-y-1 text-left z-10">
+              <DialogTitle className="text-2xl font-black text-foreground sm:text-3xl drop-shadow-sm">
                 {principal ? principal.nome : "Monte sua pizza"}
               </DialogTitle>
-              <DialogDescription className="text-sm leading-relaxed text-muted-foreground">
+              <DialogDescription className="text-sm leading-relaxed text-muted-foreground bg-card/60 backdrop-blur-sm p-2 rounded-lg -mx-2">
                 {principal?.descricao ?? "Escolha o tamanho e os sabores"}
               </DialogDescription>
             </DialogHeader>
