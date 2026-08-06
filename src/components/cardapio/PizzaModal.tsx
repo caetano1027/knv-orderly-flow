@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, ChevronRight, X, Plus } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
+import { Check, ChevronRight, Plus } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { QuantityStepper } from "./QuantityStepper";
 import { bordas, getSabor, getTamanho, tamanhos, todosSabores, type TamanhoId } from "@/config/menu";
@@ -88,9 +88,9 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
   return (
     <Dialog open={aberto} onOpenChange={(o) => !o && onFechar()}>
       <DialogContent
-        className="max-h-[95vh] w-[95%] max-w-[600px] flex-col gap-0 overflow-hidden p-0 sm:rounded-3xl"
+        className="max-h-[95vh] w-[95%] max-w-[600px] flex flex-col gap-0 overflow-hidden p-0 sm:rounded-3xl border-none bg-card shadow-2xl"
       >
-        <div className="custom-scroll flex-1 overflow-y-auto">
+        <div className="custom-scroll flex-1 overflow-y-auto overflow-x-hidden">
           <div className="relative h-48 w-full shrink-0 overflow-hidden sm:h-56">
             {principal ? (
               <img
@@ -109,9 +109,9 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
               <DialogTitle className="text-2xl font-black text-foreground sm:text-3xl">
                 {principal ? principal.nome : "Monte sua pizza"}
               </DialogTitle>
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <DialogDescription className="text-sm leading-relaxed text-muted-foreground">
                 {principal?.descricao ?? "Escolha o tamanho e os sabores"}
-              </p>
+              </DialogDescription>
             </DialogHeader>
 
             <Secao titulo="Tamanho" obrigatorio>
