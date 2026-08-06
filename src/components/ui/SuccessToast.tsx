@@ -20,6 +20,8 @@ export function SuccessToast({
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
+      // If we don't have exit animation handling, call onClose immediately
+      // but here we rely on onAnimationComplete
     }, duration);
 
     return () => clearTimeout(timer);
@@ -31,12 +33,17 @@ export function SuccessToast({
   };
 
   return (
-    <AnimatePresence onExitComplete={onClose ? () => onClose() : undefined}>
+    <AnimatePresence mode="wait">
       {isVisible && (
         <motion.div
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+          onAnimationComplete={(definition) => {
+            if (definition === "exit" || (typeof definition === "object" && "opacity" in definition && (definition as any).opacity === 0)) {
+              onClose?.();
+            }
+          }}
           className="pointer-events-auto relative flex w-full max-w-[320px] overflow-hidden rounded-xl border border-primary/40 bg-[#171717] p-4 shadow-2xl sm:max-w-[350px]"
         >
           {/* Wave Animation */}
