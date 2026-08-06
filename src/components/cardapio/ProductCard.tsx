@@ -7,8 +7,8 @@ type Props = {
   descricao: string;
   imagem: string;
   preco: number;
-  prefixoPreco?: string;
-  selo?: string;
+  prefixoPreco?: string | undefined;
+  selo?: string | undefined;
   onClick: () => void;
 };
 

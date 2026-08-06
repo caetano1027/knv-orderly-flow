@@ -70,7 +70,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
     <Dialog open={aberto} onOpenChange={(o) => !o && onFechar()}>
       <DialogContent
         className="max-h-[92vh] gap-0 overflow-hidden p-0 sm:max-w-lg"
-        showCloseButton
+      
       >
         <div className="relative h-40 w-full shrink-0 overflow-hidden sm:h-48">
           {principal ? (
@@ -211,8 +211,8 @@ function Opcao({
 }: {
   ativo: boolean;
   titulo: string;
-  subtitulo?: string;
-  valor?: string;
+  subtitulo?: string | undefined;
+  valor?: string | undefined;
   onClick: () => void;
 }) {
   return (
