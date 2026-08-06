@@ -56,7 +56,7 @@ export function ProductCard({
           {prefixoPreco ? (
             <span className="text-[11px] text-muted-foreground">{prefixoPreco}</span>
           ) : null}
-          <span className="text-base font-extrabold text-accent">{brl(preco)}</span>
+          <span className="whitespace-nowrap text-base font-extrabold text-accent">{brl(preco)}</span>
         </div>
       </div>
 
