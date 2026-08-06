@@ -100,9 +100,6 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
             />
           ) : null}
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
-          <DialogClose className="absolute right-4 top-4 rounded-full bg-black/40 p-2 text-white backdrop-blur transition-colors hover:bg-black/60">
-            <X className="h-5 w-5" />
-          </DialogClose>
         </div>
 
         <div className="esconder-scroll -mt-8 overflow-y-auto px-5 pb-4">
