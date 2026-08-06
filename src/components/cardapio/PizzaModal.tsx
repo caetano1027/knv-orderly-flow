@@ -69,9 +69,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
   return (
     <Dialog open={aberto} onOpenChange={(o) => !o && onFechar()}>
       <DialogContent
-        className="max-h-[92vh] gap-0 overflow-hidden p-0 sm:max-w-lg"
-      
-      >
+        className="max-h-[92vh] gap-0 overflow-hidden p-0 sm:max-w-lg">
         <div className="relative h-40 w-full shrink-0 overflow-hidden sm:h-48">
           {principal ? (
             <img
