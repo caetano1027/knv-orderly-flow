@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { MapPin, Pencil, ShoppingBag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { QuantityStepper } from "./QuantityStepper";
 import { getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
 import { store } from "@/config/store";
