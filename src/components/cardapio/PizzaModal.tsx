@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, ChevronRight } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Check, ChevronRight, X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { QuantityStepper } from "./QuantityStepper";
 import { bordas, getSabor, getTamanho, tamanhos, todosSabores, type TamanhoId } from "@/config/menu";
 import { brl } from "@/lib/format";
 import { precoUnitario, type PizzaItem } from "@/lib/cart";
+import { toast } from "sonner";
 
 type Props = {
   aberto: boolean;
@@ -16,7 +17,7 @@ type Props = {
 };
 
 export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfirmar }: Props) {
-  const [tamanho, setTamanho] = useState<TamanhoId>("grande");
+  const [tamanho, setTamanho] = useState<TamanhoId | null>(null);
   const [sabores, setSabores] = useState<string[]>([]);
   const [borda, setBorda] = useState("sem");
   const [quantidade, setQuantidade] = useState(1);
@@ -31,7 +32,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
       setQuantidade(itemEdicao.quantidade);
       setObservacao(itemEdicao.observacao);
     } else {
-      setTamanho("grande");
+      setTamanho(null);
       setSabores(saborInicial ? [saborInicial] : []);
       setBorda("sem");
       setQuantidade(1);
@@ -39,20 +40,38 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
     }
   }, [aberto, itemEdicao, saborInicial]);
 
-  const maxSabores = getTamanho(tamanho).maxSabores;
+  const maxSabores = tamanho ? getTamanho(tamanho).maxSabores : 1;
 
   useEffect(() => {
-    setSabores((atual) => atual.slice(0, maxSabores));
-  }, [maxSabores]);
+    if (tamanho) {
+      setSabores((atual) => atual.slice(0, maxSabores));
+    }
+  }, [maxSabores, tamanho]);
 
-  const item = useMemo<Omit<PizzaItem, "uid">>(
-    () => ({ tipo: "pizza", tamanho, sabores, borda, quantidade, observacao }),
-    [tamanho, sabores, borda, quantidade, observacao],
-  );
+  const total = useMemo(() => {
+    if (!tamanho) return 0;
+    const itemSimulado: PizzaItem = { tipo: "pizza", uid: "x", tamanho, sabores, borda, quantidade, observacao };
+    return precoUnitario(itemSimulado) * quantidade;
+  }, [tamanho, sabores, borda, quantidade, observacao]);
 
-  const total = precoUnitario({ ...item, uid: "x" }) * quantidade;
-  const podeAdicionar = sabores.length > 0;
   const principal = getSabor(sabores[0] ?? saborInicial ?? "");
+
+  const handleConfirmar = () => {
+    if (!tamanho) {
+      toast.error("Escolha um tamanho antes de continuar.");
+      return;
+    }
+    if (sabores.length === 0) {
+      toast.error("Selecione pelo menos um sabor.");
+      return;
+    }
+
+    onConfirmar(
+      { tipo: "pizza", tamanho, sabores, borda, quantidade, observacao },
+      itemEdicao?.uid
+    );
+    toast.success(itemEdicao ? "Pedido atualizado!" : "Pizza adicionada ao pedido.");
+  };
 
   const alternarSabor = (id: string, posicao: number) => {
     setSabores((atual) => {
@@ -81,6 +100,9 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
             />
           ) : null}
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+          <DialogClose className="absolute right-4 top-4 rounded-full bg-black/40 p-2 text-white backdrop-blur transition-colors hover:bg-black/60">
+            <X className="h-5 w-5" />
+          </DialogClose>
         </div>
 
         <div className="esconder-scroll -mt-8 overflow-y-auto px-5 pb-4">
@@ -122,7 +144,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
                     ativo={sabores[index] === s.id}
                     titulo={s.nome}
                     subtitulo={s.descricao}
-                    valor={brl(s.precos[tamanho])}
+                    valor={tamanho ? brl(s.precos[tamanho]) : "—"}
                     onClick={() => alternarSabor(s.id, index)}
                   />
                 ))}
@@ -156,15 +178,25 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
         </div>
 
         <div className="flex items-center gap-3 border-t border-border bg-card p-4">
+          <DialogClose asChild>
+            <button
+              type="button"
+              className="hidden h-11 items-center justify-center rounded-full px-4 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground sm:flex"
+            >
+              Cancelar
+            </button>
+          </DialogClose>
           <QuantityStepper valor={quantidade} onChange={setQuantidade} />
           <button
             type="button"
-            disabled={!podeAdicionar}
-            onClick={() => onConfirmar(item, itemEdicao?.uid)}
-            className="gradiente-fogo flex flex-1 items-center justify-between rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={handleConfirmar}
+            className="gradiente-fogo flex flex-1 items-center justify-between rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform active:scale-[0.98]"
           >
-            <span>{itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}</span>
-            <span className="tabular-nums">{brl(total)}</span>
+            <div className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              <span>{itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}</span>
+            </div>
+            <span className="tabular-nums">{total > 0 ? brl(total) : ""}</span>
           </button>
         </div>
       </DialogContent>
