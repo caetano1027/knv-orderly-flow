@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { QuantityStepper } from "./QuantityStepper";
@@ -58,47 +58,48 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
             <DialogTitle className="text-2xl font-black text-foreground">{esfiha.nome}</DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground">{esfiha.descricao}</DialogDescription>
           </DialogHeader>
-          <p className="mt-2 text-lg font-extrabold text-accent">{brl(esfiha.preco)}</p>
+          <p className="mt-2 text-lg font-black text-accent">{brl(esfiha.preco)}</p>
 
           <div className="mt-5">
-            <h4 className="mb-2 text-sm font-bold uppercase tracking-wide">Observações</h4>
+            <h4 className="mb-2 text-sm font-black uppercase tracking-wide">Observações</h4>
             <Textarea
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
               maxLength={300}
               placeholder="Ex: bem assada, sem cebola..."
-              className="min-h-20 resize-none bg-secondary"
+              className="min-h-20 resize-none bg-secondary text-sm"
             />
           </div>
         </div>
 
         <div className="flex shrink-0 flex-col gap-3 border-t border-border bg-card p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5">
           <div className="flex items-center justify-between sm:justify-start sm:gap-6">
-            <button
-              type="button"
-              className="flex h-11 items-center justify-center text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Cancelar
-            </button>
-          </DialogClose>
-          
-          <div className="flex-shrink-0">
-            <QuantityStepper valor={quantidade} onChange={setQuantidade} />
+            <DialogClose asChild>
+              <button
+                type="button"
+                className="flex h-11 items-center justify-center text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Cancelar
+              </button>
+            </DialogClose>
+            
+            <div className="flex-shrink-0">
+              <QuantityStepper valor={quantidade} onChange={setQuantidade} />
+            </div>
           </div>
-        </div>
 
-        <button
-          type="button"
-          onClick={handleConfirmar}
-          className="gradiente-fogo flex flex-1 items-center justify-between rounded-xl px-5 py-4 text-sm font-black text-primary-foreground shadow-lg transition-transform active:scale-[0.98] sm:py-3.5"
-        >
-          <span className="truncate">
-            {itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}
-          </span>
-          <span className="ml-2 whitespace-nowrap tabular-nums">
-            {brl(esfiha.preco * quantidade)}
-          </span>
-        </button>
+          <button
+            type="button"
+            onClick={handleConfirmar}
+            className="gradiente-fogo flex flex-1 items-center justify-between rounded-xl px-5 py-4 text-sm font-black text-primary-foreground shadow-lg transition-transform active:scale-[0.98] sm:py-3.5"
+          >
+            <span className="truncate">
+              {itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}
+            </span>
+            <span className="ml-2 whitespace-nowrap tabular-nums">
+              {brl(esfiha.preco * quantidade)}
+            </span>
+          </button>
         </div>
       </DialogContent>
     </Dialog>
