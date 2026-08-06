@@ -88,7 +88,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
   return (
     <Dialog open={aberto} onOpenChange={(o) => !o && onFechar()}>
       <DialogContent
-        className="max-h-[95vh] w-[95%] max-w-[600px] flex-col gap-0 overflow-hidden p-0 sm:rounded-3xl"
+        className="max-h-[95vh] w-[95%] max-w-[600px] flex flex-col gap-0 overflow-hidden p-0 sm:rounded-3xl border-none bg-card"
       >
         <div className="custom-scroll flex-1 overflow-y-auto">
           <div className="relative h-48 w-full shrink-0 overflow-hidden sm:h-56">
