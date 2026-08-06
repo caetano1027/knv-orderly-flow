@@ -31,7 +31,7 @@ export function SuccessToast({
   };
 
   return (
-    <AnimatePresence onExitComplete={onClose}>
+    <AnimatePresence onExitComplete={onClose ? () => onClose() : undefined}>
       {isVisible && (
         <motion.div
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
