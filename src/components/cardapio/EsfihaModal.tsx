@@ -7,6 +7,7 @@ import { getEsfiha } from "@/config/menu";
 import { brl } from "@/lib/format";
 import type { EsfihaItem } from "@/lib/cart";
 import { toast } from "sonner";
+import { SuccessToast } from "../ui/SuccessToast";
 
 type Props = {
   aberto: boolean;
@@ -36,7 +37,13 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
       { tipo: "esfiha", esfihaId: esfiha.id, quantidade, observacao },
       itemEdicao?.uid
     );
-    toast.success(itemEdicao ? "Pedido atualizado!" : "Esfiha adicionada ao pedido.");
+    toast.custom((t) => (
+      <SuccessToast 
+        title={itemEdicao ? "Pedido atualizado!" : "Esfiha adicionada ao pedido"} 
+        description={itemEdicao ? "As alterações foram salvas." : "Seu pedido foi atualizado."} 
+        onClose={() => toast.dismiss(t)}
+      />
+    ));
   };
 
   return (

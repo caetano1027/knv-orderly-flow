@@ -128,7 +128,16 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <Toaster position="top-center" richColors />
+      <Toaster 
+        position="top-right" 
+        expand={false}
+        visibleToasts={5}
+        toastOptions={{
+          unstyled: true,
+          className: "pointer-events-none",
+        }}
+        mobileOffset={{ bottom: "80px", right: "16px", left: "16px" }}
+      />
     </QueryClientProvider>
   );
 }
