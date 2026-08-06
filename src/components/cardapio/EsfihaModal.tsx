@@ -53,12 +53,12 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
         </div>
 
-        <div className="custom-scroll flex-1 overflow-y-auto overflow-x-hidden -mt-8 px-5 pb-4">
-          <DialogHeader className="space-y-1 text-left">
-            <DialogTitle className="text-2xl font-black text-foreground">{esfiha.nome}</DialogTitle>
-            <DialogDescription className="text-sm text-muted-foreground">{esfiha.descricao}</DialogDescription>
+        <div className="custom-scroll flex-1 overflow-y-auto overflow-x-hidden -mt-10 px-5 pb-4">
+          <DialogHeader className="relative space-y-1 text-left z-10">
+            <DialogTitle className="text-2xl font-black text-foreground drop-shadow-sm">{esfiha.nome}</DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground bg-card/60 backdrop-blur-sm p-2 rounded-lg -mx-2">{esfiha.descricao}</DialogDescription>
           </DialogHeader>
-          <p className="mt-2 text-lg font-black text-accent">{brl(esfiha.preco)}</p>
+          <p className="mt-2 text-lg font-black text-accent drop-shadow-sm">{brl(esfiha.preco)}</p>
 
           <div className="mt-5">
             <h4 className="mb-2 text-sm font-black uppercase tracking-wide">Observações</h4>
