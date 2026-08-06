@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { X, Plus } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { QuantityStepper } from "./QuantityStepper";
 import { getEsfiha } from "@/config/menu";
 import { brl } from "@/lib/format";
 import type { EsfihaItem } from "@/lib/cart";
+import { toast } from "sonner";
 
 type Props = {
   aberto: boolean;
@@ -29,6 +31,14 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
 
   if (!esfiha) return null;
 
+  const handleConfirmar = () => {
+    onConfirmar(
+      { tipo: "esfiha", esfihaId: esfiha.id, quantidade, observacao },
+      itemEdicao?.uid
+    );
+    toast.success(itemEdicao ? "Pedido atualizado!" : "Esfiha adicionada ao pedido.");
+  };
+
   return (
     <Dialog open={aberto} onOpenChange={(o) => !o && onFechar()}>
       <DialogContent className="max-h-[92vh] gap-0 overflow-hidden p-0 sm:max-w-md">
@@ -41,6 +51,9 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
             height={800}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+          <DialogClose className="absolute right-4 top-4 rounded-full bg-black/40 p-2 text-white backdrop-blur transition-colors hover:bg-black/60">
+            <X className="h-5 w-5" />
+          </DialogClose>
         </div>
 
         <div className="esconder-scroll -mt-8 overflow-y-auto px-5 pb-4">
@@ -63,18 +76,24 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
         </div>
 
         <div className="flex items-center gap-3 border-t border-border bg-card p-4">
+          <DialogClose asChild>
+            <button
+              type="button"
+              className="hidden h-11 items-center justify-center rounded-full px-4 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground sm:flex"
+            >
+              Cancelar
+            </button>
+          </DialogClose>
           <QuantityStepper valor={quantidade} onChange={setQuantidade} />
           <button
             type="button"
-            onClick={() =>
-              onConfirmar(
-                { tipo: "esfiha", esfihaId: esfiha.id, quantidade, observacao },
-                itemEdicao?.uid,
-              )
-            }
+            onClick={handleConfirmar}
             className="gradiente-fogo flex flex-1 items-center justify-between rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform active:scale-[0.98]"
           >
-            <span>{itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}</span>
+            <div className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              <span>{itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}</span>
+            </div>
             <span className="tabular-nums">{brl(esfiha.preco * quantidade)}</span>
           </button>
         </div>
