@@ -330,7 +330,7 @@ export function Cart({
           onClick={enviar}
           disabled={!podeEnviar}
           whileTap={{ scale: 0.98 }}
-          className="gradiente-fogo mt-3 w-full rounded-full px-5 py-3.5 text-sm font-bold text-primary-foreground transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+          className="gradiente-fogo mt-3 flex w-full items-center justify-center rounded-xl px-5 py-4 text-base font-bold text-primary-foreground shadow-lg transition-all active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
         >
           Enviar Pedido pelo WhatsApp
         </motion.button>

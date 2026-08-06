@@ -88,8 +88,8 @@ function Cardapio() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24 lg:pb-0">
-      <header className="relative h-64 w-full overflow-hidden sm:h-80">
+    <div className="min-h-screen bg-background pb-32 lg:pb-0">
+      <header className="relative h-56 w-full overflow-hidden sm:h-80 lg:h-96">
         <img
           src={heroBanner}
           alt="Pizza artesanal saindo do forno a lenha"
@@ -102,7 +102,7 @@ function Cardapio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-5"
+          className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-6 sm:pb-8"
         >
           <span className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary">
             <Flame className="h-3.5 w-3.5" /> Forno a lenha
@@ -156,7 +156,7 @@ function Cardapio() {
             </section>
           ) : null}
 
-          <nav className="esconder-scroll sticky top-0 z-30 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
+          <nav className="esconder-scroll sticky top-0 z-30 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-border bg-background/95 px-4 py-3.5 backdrop-blur-md">
             {categorias.map((c) => (
               <a
                 key={c.id}
@@ -224,7 +224,7 @@ function Cardapio() {
 
       <Sheet open={carrinhoMobile} onOpenChange={setCarrinhoMobile}>
         {totalItens > 0 ? (
-          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 p-3 backdrop-blur lg:hidden">
+          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 p-4 pb-6 backdrop-blur-md lg:hidden">
             <SheetTrigger asChild>
               <motion.button
                 type="button"
