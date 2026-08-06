@@ -168,32 +168,37 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
               maxLength={300}
-              placeholder="Ex: sem cebola, capricha no orégano..."
-              className="min-h-20 resize-none bg-secondary"
+              placeholder="Ex.: bem assada, sem cebola, retirar azeitona, cortar em 8 pedaços..."
+              className="min-h-24 resize-none bg-secondary text-sm"
             />
           </Secao>
         </div>
 
-        <div className="flex items-center gap-3 border-t border-border bg-card p-4">
+        <div className="flex items-center gap-2 border-t border-border bg-card p-4 sm:gap-4">
           <DialogClose asChild>
             <button
               type="button"
-              className="hidden h-11 items-center justify-center rounded-full px-4 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground sm:flex"
+              className="flex h-11 items-center justify-center px-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
             >
               Cancelar
             </button>
           </DialogClose>
-          <QuantityStepper valor={quantidade} onChange={setQuantidade} />
+          
+          <div className="flex-shrink-0">
+            <QuantityStepper valor={quantidade} onChange={setQuantidade} />
+          </div>
+
           <button
             type="button"
             onClick={handleConfirmar}
-            className="gradiente-fogo flex flex-1 items-center justify-between rounded-full px-5 py-3 text-sm font-bold text-primary-foreground transition-transform active:scale-[0.98]"
+            className="gradiente-fogo flex flex-1 items-center justify-between rounded-xl px-4 py-3 text-sm font-bold text-primary-foreground transition-transform active:scale-[0.98] sm:px-6"
           >
-            <div className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              <span>{itemEdicao ? "Salvar alterações" : "Adicionar ao pedido"}</span>
-            </div>
-            <span className="tabular-nums">{total > 0 ? brl(total) : ""}</span>
+            <span className="truncate">
+              {itemEdicao ? "Salvar" : "Adicionar ao pedido"}
+            </span>
+            <span className="ml-2 tabular-nums">
+              {total > 0 ? brl(total) : ""}
+            </span>
           </button>
         </div>
       </DialogContent>
