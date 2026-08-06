@@ -26,6 +26,8 @@ export type Sabor = {
   imagem: string;
   /** Preço por tamanho */
   precos: Record<TamanhoId, number>;
+  /** Categoria do sabor: salgado ou doce */
+  categoriaId: "pizzas-salgadas" | "pizzas-doces";
   /** Selo opcional: "Mais vendida", "Promoção"... */
   selo?: string;
 };
