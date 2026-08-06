@@ -7,6 +7,7 @@ import { bordas, getSabor, getTamanho, tamanhos, todosSabores, type TamanhoId } 
 import { brl } from "@/lib/format";
 import { precoUnitario, type PizzaItem } from "@/lib/cart";
 import { toast } from "sonner";
+import { SuccessToast } from "../ui/SuccessToast";
 
 type Props = {
   aberto: boolean;
@@ -70,7 +71,13 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
       { tipo: "pizza", tamanho, sabores, borda, quantidade, observacao },
       itemEdicao?.uid
     );
-    toast.success(itemEdicao ? "Pedido atualizado!" : "Pizza adicionada ao pedido.");
+    toast.custom((t) => (
+      <SuccessToast 
+        title={itemEdicao ? "Pedido atualizado!" : "Pizza adicionada ao pedido"} 
+        description={itemEdicao ? "As alterações foram salvas." : "Seu pedido foi atualizado."} 
+        onClose={() => toast.dismiss(t)}
+      />
+    ));
   };
 
   const alternarSabor = (id: string, posicao: number) => {

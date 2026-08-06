@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { MapPin, Pencil, ShoppingBag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { SuccessToast } from "../ui/SuccessToast";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
 import { getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
@@ -63,7 +64,13 @@ export function Cart({
     const numero = proximoNumeroPedido();
     const mensagem = montarMensagem(itens, cliente, { subtotal, entrega, total }, numero);
     window.open(linkWhatsApp(mensagem), "_blank", "noopener,noreferrer");
-    toast.success(`Pedido nº ${numero} enviado para o WhatsApp!`);
+    toast.custom((t) => (
+      <SuccessToast 
+        title={`Pedido nº ${numero}`}
+        description="Enviado para o WhatsApp com sucesso!"
+        onClose={() => toast.dismiss(t)}
+      />
+    ));
     limpar();
     onEnviado?.();
   };
@@ -129,7 +136,16 @@ export function Cart({
                       </button>
                       <button
                         type="button"
-                        onClick={() => remover(item.uid)}
+                        onClick={() => {
+                          remover(item.uid);
+                          toast.custom((t) => (
+                            <SuccessToast 
+                              title="Item removido"
+                              description="O item foi retirado do seu pedido."
+                              onClose={() => toast.dismiss(t)}
+                            />
+                          ));
+                        }}
                         className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-destructive/15 hover:text-destructive"
                         aria-label="Remover item"
                       >
