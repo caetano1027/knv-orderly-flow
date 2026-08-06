@@ -174,24 +174,26 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
           </Secao>
         </div>
 
-        <div className="flex items-center gap-2 border-t border-border bg-card p-4 sm:gap-4">
-          <DialogClose asChild>
-            <button
-              type="button"
-              className="flex h-11 items-center justify-center px-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Cancelar
-            </button>
-          </DialogClose>
-          
-          <div className="flex-shrink-0">
-            <QuantityStepper valor={quantidade} onChange={setQuantidade} />
+        <div className="flex flex-col gap-3 border-t border-border bg-card p-4 sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex items-center justify-between sm:justify-start sm:gap-4">
+            <DialogClose asChild>
+              <button
+                type="button"
+                className="flex h-11 items-center justify-center text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Cancelar
+              </button>
+            </DialogClose>
+            
+            <div className="flex-shrink-0">
+              <QuantityStepper valor={quantidade} onChange={setQuantidade} />
+            </div>
           </div>
 
           <button
             type="button"
             onClick={handleConfirmar}
-            className="gradiente-fogo flex flex-1 items-center justify-between rounded-xl px-4 py-3 text-sm font-bold text-primary-foreground transition-transform active:scale-[0.98] sm:px-6"
+            className="gradiente-fogo flex flex-1 items-center justify-between rounded-xl px-5 py-3.5 text-sm font-bold text-primary-foreground shadow-lg transition-transform active:scale-[0.98] sm:py-3 sm:text-sm"
           >
             <span className="truncate">
               {itemEdicao ? "Salvar" : "Adicionar ao pedido"}
