@@ -124,9 +124,9 @@ export function montarMensagem(
     for (const item of esfihas) {
       if (item.tipo !== "esfiha") continue;
       L.push(`🥟 *${item.quantidade} x Esfiha*`, "");
-      L.push("✨ Sabor:", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
-      L.push("📝 Observações:", item.observacao || "-", "");
-      L.push("💵 Valor:", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push("✨ *Sabor:*", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
+      L.push("📝 *Observações:*", item.observacao || "-", "");
+      L.push("💵 *Valor:*", `R$ ${brlNum(precoItem(item))}`, "");
     }
   }
 
