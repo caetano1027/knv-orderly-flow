@@ -104,9 +104,6 @@ function Cardapio() {
           transition={{ duration: 0.5 }}
           className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-6 sm:pb-8"
         >
-          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary">
-            <Flame className="h-3.5 w-3.5" /> Forno a lenha
-          </span>
           <h1 className="text-3xl font-black leading-tight text-foreground sm:text-5xl">
             {store.nome}
           </h1>
