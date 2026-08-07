@@ -76,72 +76,68 @@ export function montarMensagem(
   const hora = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const L: string[] = [];
 
-  L.push("🔥 *#### NOVO PEDIDO ####* 🔥", "");
-  L.push(`#️⃣ *Nº do Pedido:* ${numero} 🔢`, "");
-  L.push(`🗓 *Data:* ${data}`, "");
-  L.push(`🕒 *Horário:* ${hora}`, "");
-  L.push("👤 *Cliente:*", cliente.nome, "");
-  L.push("📞 *Telefone:*", cliente.telefone, "");
-  L.push("🛵 *Tipo:*", cliente.tipo === "entrega" ? "Entrega 🛵" : "Retirada 🏪", "");
+  L.push("#### NOVO PEDIDO ####", "");
+  L.push(`#️⃣   Nº pedido: ${numero}`);
+  L.push(`feito em ${data} ${hora}`, "");
+  
+  L.push(`👤   ${cliente.nome}`);
+  L.push(`📞   ${cliente.telefone}`, "");
 
   if (cliente.tipo === "entrega") {
     const e = cliente.endereco;
-    L.push("📍 *Endereço:*", "");
-    L.push(`🏘 *Rua:* ${e.rua}`);
-    L.push(`🔢 *Número:* ${e.numero}`);
-    L.push(`🏢 *Complemento:* ${e.complemento || "-"}`);
-    L.push(`🏘 *Bairro:* ${e.bairro}`);
-    L.push(`🏙 *Cidade:* ${e.cidade}`);
-    L.push(`📫 *CEP:* ${e.cep}`, "");
-    L.push("🌎 *Link do endereço:*", linkMaps(e), "");
+    L.push("🛵   Endereço de entrega");
+    L.push(`${e.rua}, ${e.numero}`);
+    L.push("", "Complemento:");
+    L.push(e.complemento || "-");
+    L.push("", "Bairro:");
+    L.push(e.bairro, "");
+    
+    // O campo "referencia" não existe explicitamente no tipo DadosCliente, 
+    // mas o cliente pode usar o complemento ou o link. 
+    // Vou omitir a linha vazia de referência se não houver campo específico.
+    
+    L.push("Link do endereço:");
+    L.push(linkMaps(e), "");
+  } else {
+    L.push("🏪   Retirada no local", "");
   }
 
-  const pizzas = itens.filter((i) => i.tipo === "pizza");
-  const esfihas = itens.filter((i) => i.tipo === "esfiha");
+  L.push("------- ITENS DO PEDIDO -------", "");
 
-  if (pizzas.length) {
-    L.push(LINHA, "", "🍕 ITENS DO PEDIDO (PIZZAS)", "");
-    for (const item of pizzas) {
-      if (item.tipo !== "pizza") continue;
+  for (const item of itens) {
+    if (item.tipo === "pizza") {
       const isPizzaDia = item.sabores.includes("pizza-dia");
       if (isPizzaDia) {
-        L.push("🍕 *Pizza do Dia*", "");
+        L.push("*Pizza do Dia*");
       } else {
-        L.push(`🍕 *${item.quantidade} x Pizza*`, "");
-        L.push("📐 *Tamanho:*", getTamanho(item.tamanho).nome, "");
-        L.push("✨ *Sabores:*");
-        for (const s of item.sabores) L.push(`  • ${getSabor(s)?.nome ?? s}`);
-        L.push("");
+        L.push(`*${item.quantidade} x Pizza ${getTamanho(item.tamanho).nome}*`);
+        L.push("Sabores:");
+        for (const s of item.sabores) L.push(`• ${getSabor(s)?.nome ?? s}`);
       }
-      L.push("🥖 *Borda:*", getBorda(item.borda)?.nome ?? "Sem borda", "");
-      L.push("📝 *Observações:*", item.observacao || "-", "");
-      L.push("💵 *Valor:*", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push(`Borda: ${getBorda(item.borda)?.nome ?? "Sem borda"}`);
+    } else {
+      L.push(`*${item.quantidade} x Esfiha*`);
+      L.push(`Sabor: ${getEsfiha(item.esfihaId)?.nome ?? item.esfihaId}`);
     }
+    
+    if (item.observacao) L.push(`Obs: ${item.observacao}`);
+    L.push(`💵 R$ ${brlNum(precoItem(item))}`, "");
   }
 
-  if (esfihas.length) {
-    L.push(LINHA, "", "🥟 ITENS DO PEDIDO (ESFIHAS)", "");
-    for (const item of esfihas) {
-      if (item.tipo !== "esfiha") continue;
-      L.push(`🥟 *${item.quantidade} x Esfiha*`, "");
-      L.push("✨ *Sabor:*", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
-      L.push("📝 *Observações:*", item.observacao || "-", "");
-      L.push("💵 *Valor:*", `R$ ${brlNum(precoItem(item))}`, "");
-    }
+  L.push("-------------------------------", "");
+  L.push(`SUBTOTAL: R$ ${brlNum(totais.subtotal)}`);
+  L.push(`ENTREGA: R$ ${brlNum(totais.entrega)}`);
+  L.push(`VALOR FINAL: R$ ${brlNum(totais.total)}`, "");
+
+  L.push("PAGAMENTO");
+  L.push(cliente.pagamento);
+  if (cliente.pagamento === "Dinheiro" && cliente.precisaTroco) {
+    L.push(`Troco para: R$ ${cliente.trocoPara}`);
   }
+  L.push("");
 
-  L.push(LINHA, "", "💰 RESUMO", "");
-  L.push("🔹 *Subtotal:*", `R$ ${brlNum(totais.subtotal)}`, "");
-  L.push("🔹 *Entrega:*", `R$ ${brlNum(totais.entrega)}`, "");
-  L.push("✅ *Valor Total:*", `*R$ ${brlNum(totais.total)}*`, "");
-
-  L.push(LINHA, "", "💳 *Pagamento*", "", `*${cliente.pagamento}*`, "");
-  if (cliente.pagamento === "Dinheiro") {
-    L.push("💵 *Troco para:*", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
-  }
-
-  L.push(LINHA, "", "⏱ *Prazo estimado*", "", `*${store.prazoEstimado}*`, "");
-  L.push(`Obrigado por escolher o *${store.nome}* ❤️`);
+  L.push(`🕐   Prazo para entrega: ${store.prazoEstimado}`);
+  L.push("", `Obrigado por escolher o *${store.nome}* ❤️`);
 
   return L.join("\n");
 }
