@@ -6,7 +6,7 @@
 
 export const store = {
   nome: "KNV Cozinha de Fogo",
-  slogan: "Pizzas na brasa & esfihas artesanais",
+  slogan: "Pizzas & esfihas artesanais",
   /** Somente números, com DDI 55 + DDD */
   whatsapp: "5561998239529",
   /** Taxa de entrega fixa em reais */
