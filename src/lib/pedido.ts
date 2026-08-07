@@ -108,14 +108,14 @@ export function montarMensagem(
         L.push("🍕 *Pizza do Dia*", "");
       } else {
         L.push(`🍕 *${item.quantidade} x Pizza*`, "");
-        L.push("📐 Tamanho:", getTamanho(item.tamanho).nome, "");
-        L.push("✨ Sabores:");
+        L.push("📐 *Tamanho:*", getTamanho(item.tamanho).nome, "");
+        L.push("✨ *Sabores:*");
         for (const s of item.sabores) L.push(`  • ${getSabor(s)?.nome ?? s}`);
         L.push("");
       }
-      L.push("🥖 Borda:", getBorda(item.borda)?.nome ?? "Sem borda", "");
-      L.push("📝 Observações:", item.observacao || "-", "");
-      L.push("💵 Valor:", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push("🥖 *Borda:*", getBorda(item.borda)?.nome ?? "Sem borda", "");
+      L.push("📝 *Observações:*", item.observacao || "-", "");
+      L.push("💵 *Valor:*", `R$ ${brlNum(precoItem(item))}`, "");
     }
   }
 
