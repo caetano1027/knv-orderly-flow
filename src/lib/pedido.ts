@@ -86,14 +86,14 @@ export function montarMensagem(
 
   if (cliente.tipo === "entrega") {
     const e = cliente.endereco;
-    L.push("📍 Endereço:", "");
-    L.push(`🏘 Rua: ${e.rua}`);
-    L.push(`🔢 Número: ${e.numero}`);
-    L.push(`🏢 Complemento: ${e.complemento || "-"}`);
-    L.push(`🏘 Bairro: ${e.bairro}`);
-    L.push(`🏙 Cidade: ${e.cidade}`);
-    L.push(`📫 CEP: ${e.cep}`, "");
-    L.push("🌎 Link do endereço:", linkMaps(e), "");
+    L.push("📍 *Endereço:*", "");
+    L.push(`🏘 *Rua:* ${e.rua}`);
+    L.push(`🔢 *Número:* ${e.numero}`);
+    L.push(`🏢 *Complemento:* ${e.complemento || "-"}`);
+    L.push(`🏘 *Bairro:* ${e.bairro}`);
+    L.push(`🏙 *Cidade:* ${e.cidade}`);
+    L.push(`📫 *CEP:* ${e.cep}`, "");
+    L.push("🌎 *Link do endereço:*", linkMaps(e), "");
   }
 
   const pizzas = itens.filter((i) => i.tipo === "pizza");
