@@ -76,24 +76,24 @@ export function montarMensagem(
   const hora = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const L: string[] = [];
 
-  L.push("🔥 #### NOVO PEDIDO #### 🔥", "");
-  L.push(`#️⃣ Nº do Pedido: ${numero} 🔢`, "");
-  L.push(`🗓 Data: ${data}`, "");
-  L.push(`🕒 Horário: ${hora}`, "");
-  L.push("👤 Cliente:", cliente.nome, "");
-  L.push("📞 Telefone:", cliente.telefone, "");
-  L.push("🛵 Tipo:", cliente.tipo === "entrega" ? "Entrega 🛵" : "Retirada 🏪", "");
+  L.push("🔥 *#### NOVO PEDIDO ####* 🔥", "");
+  L.push(`#️⃣ *Nº do Pedido:* ${numero} 🔢`, "");
+  L.push(`🗓 *Data:* ${data}`, "");
+  L.push(`🕒 *Horário:* ${hora}`, "");
+  L.push("👤 *Cliente:*", cliente.nome, "");
+  L.push("📞 *Telefone:*", cliente.telefone, "");
+  L.push("🛵 *Tipo:*", cliente.tipo === "entrega" ? "Entrega 🛵" : "Retirada 🏪", "");
 
   if (cliente.tipo === "entrega") {
     const e = cliente.endereco;
-    L.push("📍 Endereço:", "");
-    L.push(`🏘 Rua: ${e.rua}`);
-    L.push(`🔢 Número: ${e.numero}`);
-    L.push(`🏢 Complemento: ${e.complemento || "-"}`);
-    L.push(`🏘 Bairro: ${e.bairro}`);
-    L.push(`🏙 Cidade: ${e.cidade}`);
-    L.push(`📫 CEP: ${e.cep}`, "");
-    L.push("🌎 Link do endereço:", linkMaps(e), "");
+    L.push("📍 *Endereço:*", "");
+    L.push(`🏘 *Rua:* ${e.rua}`);
+    L.push(`🔢 *Número:* ${e.numero}`);
+    L.push(`🏢 *Complemento:* ${e.complemento || "-"}`);
+    L.push(`🏘 *Bairro:* ${e.bairro}`);
+    L.push(`🏙 *Cidade:* ${e.cidade}`);
+    L.push(`📫 *CEP:* ${e.cep}`, "");
+    L.push("🌎 *Link do endereço:*", linkMaps(e), "");
   }
 
   const pizzas = itens.filter((i) => i.tipo === "pizza");
@@ -108,14 +108,14 @@ export function montarMensagem(
         L.push("🍕 *Pizza do Dia*", "");
       } else {
         L.push(`🍕 *${item.quantidade} x Pizza*`, "");
-        L.push("📐 Tamanho:", getTamanho(item.tamanho).nome, "");
-        L.push("✨ Sabores:");
+        L.push("📐 *Tamanho:*", getTamanho(item.tamanho).nome, "");
+        L.push("✨ *Sabores:*");
         for (const s of item.sabores) L.push(`  • ${getSabor(s)?.nome ?? s}`);
         L.push("");
       }
-      L.push("🥖 Borda:", getBorda(item.borda)?.nome ?? "Sem borda", "");
-      L.push("📝 Observações:", item.observacao || "-", "");
-      L.push("💵 Valor:", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push("🥖 *Borda:*", getBorda(item.borda)?.nome ?? "Sem borda", "");
+      L.push("📝 *Observações:*", item.observacao || "-", "");
+      L.push("💵 *Valor:*", `R$ ${brlNum(precoItem(item))}`, "");
     }
   }
 
@@ -124,23 +124,23 @@ export function montarMensagem(
     for (const item of esfihas) {
       if (item.tipo !== "esfiha") continue;
       L.push(`🥟 *${item.quantidade} x Esfiha*`, "");
-      L.push("✨ Sabor:", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
-      L.push("📝 Observações:", item.observacao || "-", "");
-      L.push("💵 Valor:", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push("✨ *Sabor:*", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
+      L.push("📝 *Observações:*", item.observacao || "-", "");
+      L.push("💵 *Valor:*", `R$ ${brlNum(precoItem(item))}`, "");
     }
   }
 
   L.push(LINHA, "", "💰 RESUMO", "");
-  L.push("🔹 Subtotal:", `R$ ${brlNum(totais.subtotal)}`, "");
-  L.push("🔹 Entrega:", `R$ ${brlNum(totais.entrega)}`, "");
+  L.push("🔹 *Subtotal:*", `R$ ${brlNum(totais.subtotal)}`, "");
+  L.push("🔹 *Entrega:*", `R$ ${brlNum(totais.entrega)}`, "");
   L.push("✅ *Valor Total:*", `*R$ ${brlNum(totais.total)}*`, "");
 
-  L.push(LINHA, "", "💳 Pagamento", "", `*${cliente.pagamento}*`, "");
+  L.push(LINHA, "", "💳 *Pagamento*", "", `*${cliente.pagamento}*`, "");
   if (cliente.pagamento === "Dinheiro") {
-    L.push("💵 Troco para:", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
+    L.push("💵 *Troco para:*", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
   }
 
-  L.push(LINHA, "", "⏱ Prazo estimado", "", `*${store.prazoEstimado}*`, "");
+  L.push(LINHA, "", "⏱ *Prazo estimado*", "", `*${store.prazoEstimado}*`, "");
   L.push(`Obrigado por escolher o *${store.nome}* ❤️`);
 
   return L.join("\n");
