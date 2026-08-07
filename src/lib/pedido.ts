@@ -103,11 +103,16 @@ export function montarMensagem(
     L.push(LINHA, "", "🍕 ITENS DO PEDIDO", "");
     for (const item of pizzas) {
       if (item.tipo !== "pizza") continue;
-      L.push(`${item.quantidade} x Pizza`, "");
-      L.push("Tamanho:", getTamanho(item.tamanho).nome, "");
-      L.push("Sabores:");
-      for (const s of item.sabores) L.push(`- ${getSabor(s)?.nome ?? s}`);
-      L.push("");
+      const isPizzaDia = item.sabores.includes("pizza-dia");
+      if (isPizzaDia) {
+        L.push("🍕 Pizza do Dia", "");
+      } else {
+        L.push(`${item.quantidade} x Pizza`, "");
+        L.push("Tamanho:", getTamanho(item.tamanho).nome, "");
+        L.push("Sabores:");
+        for (const s of item.sabores) L.push(`- ${getSabor(s)?.nome ?? s}`);
+        L.push("");
+      }
       L.push("Borda:", getBorda(item.borda)?.nome ?? "Sem borda", "");
       L.push("Observações:", item.observacao || "-", "");
       L.push("Valor:", `R$ ${brlNum(precoItem(item))}`, "");

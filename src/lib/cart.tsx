@@ -34,6 +34,9 @@ export function precoUnitario(item: CartItem): number {
   if (item.tipo === "esfiha") {
     return getEsfiha(item.esfihaId)?.preco ?? 0;
   }
+  if (item.sabores.includes("pizza-dia")) {
+    return 29.90 + (getBorda(item.borda)?.preco ?? 0);
+  }
   const precos = item.sabores.map((id) => getSabor(id)?.precos[item.tamanho] ?? 0);
   const base = precos.length ? Math.max(...precos) : 0;
   return base + (getBorda(item.borda)?.preco ?? 0);

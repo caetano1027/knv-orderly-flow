@@ -33,7 +33,8 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
       setQuantidade(itemEdicao.quantidade);
       setObservacao(itemEdicao.observacao);
     } else {
-      setTamanho(null);
+      const isPizzaDia = saborInicial === "pizza-dia";
+      setTamanho(isPizzaDia ? "grande" : null);
       setSabores(saborInicial ? [saborInicial] : []);
       setBorda("sem");
       setQuantidade(1);
@@ -51,6 +52,9 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
 
   const total = useMemo(() => {
     if (!tamanho) return 0;
+    if (sabores.includes("pizza-dia")) {
+      return (29.90 + (bordas.find(b => b.id === borda)?.preco ?? 0)) * quantidade;
+    }
     const itemSimulado: PizzaItem = { tipo: "pizza", uid: "x", tamanho, sabores, borda, quantidade, observacao };
     return precoUnitario(itemSimulado) * quantidade;
   }, [tamanho, sabores, borda, quantidade, observacao]);
