@@ -195,7 +195,12 @@ export const categorias: Categoria[] = [
 
 /** Promoções exibidas no topo (deixe a lista vazia para ocultar) */
 export const promocoes = [
-  { id: "pizza-dia", titulo: "Pizza do Dia", descricao: "Confira o sabor em destaque hoje com preço especial!" },
+  { 
+    id: "pizza-dia", 
+    titulo: "Pizza do Dia", 
+    descricao: "Confira o sabor em destaque hoje com preço especial!",
+    categoriaId: "pizza-dia" // Flag for special modal behavior
+  },
 ];
 
 export const todosSabores = categorias
