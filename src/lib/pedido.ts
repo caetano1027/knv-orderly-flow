@@ -135,9 +135,9 @@ export function montarMensagem(
   L.push("🔹 *Entrega:*", `R$ ${brlNum(totais.entrega)}`, "");
   L.push("✅ *Valor Total:*", `*R$ ${brlNum(totais.total)}*`, "");
 
-  L.push(LINHA, "", "💳 Pagamento", "", `*${cliente.pagamento}*`, "");
+  L.push(LINHA, "", "💳 *Pagamento*", "", `*${cliente.pagamento}*`, "");
   if (cliente.pagamento === "Dinheiro") {
-    L.push("💵 Troco para:", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
+    L.push("💵 *Troco para:*", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
   }
 
   L.push(LINHA, "", "⏱ Prazo estimado", "", `*${store.prazoEstimado}*`, "");
