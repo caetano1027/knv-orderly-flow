@@ -153,13 +153,14 @@ function Cardapio() {
           {promocoes.length ? (
             <section className="esconder-scroll -mx-4 mb-6 flex gap-3 overflow-x-auto px-4 pb-1">
               {promocoes.map((p) => (
-                <div
+                <button
                   key={p.id}
-                  className="sombra-card min-w-[240px] rounded-2xl border border-primary/30 bg-card p-4"
+                  onClick={() => abrirPizza(p.id)}
+                  className="sombra-card min-w-[240px] appearance-none rounded-2xl border border-primary/30 bg-card p-4 text-left transition-transform active:scale-[0.98]"
                 >
                   <p className="text-sm font-bold text-primary">{p.titulo}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{p.descricao}</p>
-                </div>
+                </button>
               ))}
             </section>
           ) : null}
