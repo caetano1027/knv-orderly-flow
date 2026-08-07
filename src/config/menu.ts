@@ -6,7 +6,8 @@
 import pizzaSalgada from "@/assets/pizza-salgada.jpg";
 import pizzaDoce from "@/assets/pizza-doce.jpg";
 import esfihaImg from "@/assets/esfiha.jpg";
-import bebidaImg from "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600&auto=format&fit=crop"; // Imagem de bebidas (suco/drink) do Unsplash
+const bebidaImg = "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600&auto=format&fit=crop"; // Imagem de bebidas (suco/drink) do Unsplash
+
 
 export type TamanhoId = "pequena" | "grande";
 
