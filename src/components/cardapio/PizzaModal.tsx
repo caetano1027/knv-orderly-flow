@@ -33,7 +33,8 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
       setQuantidade(itemEdicao.quantidade);
       setObservacao(itemEdicao.observacao);
     } else {
-      setTamanho(null);
+      const isPizzaDia = saborInicial === "pizza-dia";
+      setTamanho(isPizzaDia ? "grande" : null);
       setSabores(saborInicial ? [saborInicial] : []);
       setBorda("sem");
       setQuantidade(1);
@@ -51,6 +52,9 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
 
   const total = useMemo(() => {
     if (!tamanho) return 0;
+    if (sabores.includes("pizza-dia")) {
+      return (29.90 + (bordas.find(b => b.id === borda)?.preco ?? 0)) * quantidade;
+    }
     const itemSimulado: PizzaItem = { tipo: "pizza", uid: "x", tamanho, sabores, borda, quantidade, observacao };
     return precoUnitario(itemSimulado) * quantidade;
   }, [tamanho, sabores, borda, quantidade, observacao]);
@@ -92,6 +96,8 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
     });
   };
 
+  const isPizzaDia = sabores.includes("pizza-dia");
+
   return (
     <Dialog open={aberto} onOpenChange={(o) => !o && onFechar()}>
       <DialogContent
@@ -99,10 +105,10 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
       >
         <div className="custom-scroll flex-1 overflow-y-auto overflow-x-hidden">
           <div className="relative h-48 w-full shrink-0 overflow-hidden sm:h-56">
-            {principal ? (
+            {principal || isPizzaDia ? (
               <img
-                src={principal.imagem}
-                alt={principal.nome}
+                src={principal?.imagem || "/pizza-dia.jpg"}
+                alt={principal?.nome || "Pizza do Dia"}
                 className="h-full w-full object-cover"
                 width={800}
                 height={800}
@@ -114,51 +120,80 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
           <div className="-mt-14 px-5 pb-6">
             <DialogHeader className="relative space-y-1 text-left z-10">
               <DialogTitle className="text-2xl font-black text-foreground sm:text-3xl drop-shadow-sm">
-                {principal ? principal.nome : "Monte sua pizza"}
+                {isPizzaDia ? "Pizza do Dia" : principal ? principal.nome : "Monte sua pizza"}
               </DialogTitle>
               <DialogDescription className="text-sm leading-relaxed text-muted-foreground bg-card/60 backdrop-blur-sm p-2 rounded-lg -mx-2">
-                {principal?.descricao ?? "Escolha o tamanho e os sabores"}
+                {isPizzaDia 
+                  ? "Confira o sabor em destaque hoje com preço especial!"
+                  : principal?.descricao ?? "Escolha o tamanho e os sabores"}
               </DialogDescription>
             </DialogHeader>
 
             <Secao titulo="Tamanho" obrigatorio>
               <div className="grid gap-2">
-                {tamanhos.map((t) => (
-                  <Opcao
-                    key={t.id}
-                    ativo={tamanho === t.id}
-                    titulo={t.nome}
-                    subtitulo={t.descricao}
-                    valor={principal ? brl(principal.precos[t.id]) : undefined}
-                    onClick={() => setTamanho(t.id)}
-                  />
-                ))}
+                {tamanhos
+                  .filter((t) => !isPizzaDia || t.id === "grande")
+                  .map((t) => (
+                    <Opcao
+                      key={t.id}
+                      ativo={tamanho === t.id}
+                      titulo={t.nome}
+                      subtitulo={t.descricao}
+                      valor={isPizzaDia ? brl(29.90) : principal ? brl(principal.precos[t.id]) : undefined}
+                      onClick={() => !isPizzaDia && setTamanho(t.id)}
+                    />
+                  ))}
               </div>
             </Secao>
 
-            {Array.from({ length: maxSabores }).map((_, index) => (
-              <Secao
-                key={index}
-                titulo={`${["Primeiro", "Segundo", "Terceiro"][index]} sabor`}
-                obrigatorio={index === 0}
-                opcional={index > 0}
-              >
-                <div className="grid gap-2">
-                  {todosSabores
-                    .filter((s) => !principal || s.categoriaId === principal.categoriaId)
-                    .map((s) => (
-                      <Opcao
-                        key={s.id}
-                        ativo={sabores[index] === s.id}
-                        titulo={s.nome}
-                        subtitulo={s.descricao}
-                        valor={tamanho ? brl(s.precos[tamanho]) : "—"}
-                        onClick={() => alternarSabor(s.id, index)}
-                      />
-                    ))}
+            {isPizzaDia ? (
+              <Secao titulo="Sabores do Dia (Informativo)">
+                <div className="grid gap-3 rounded-2xl border border-border bg-secondary/20 p-4">
+                  <div className="space-y-3">
+                    <div className="flex flex-col gap-1 border-b border-border/50 pb-2">
+                      <span className="text-xs font-black uppercase text-primary">Terça-feira</span>
+                      <span className="text-sm text-foreground">Meia Calabresa + Meia Chocolate</span>
+                    </div>
+                    <div className="flex flex-col gap-1 border-b border-border/50 pb-2">
+                      <span className="text-xs font-black uppercase text-primary">Quarta-feira</span>
+                      <span className="text-sm text-foreground">Meia Frango com Catupiry + Meia Banana com Canela</span>
+                    </div>
+                    <div className="flex flex-col gap-1 border-b border-border/50 pb-2">
+                      <span className="text-xs font-black uppercase text-primary">Quinta-feira</span>
+                      <span className="text-sm text-foreground">Meia Lombo Canadense + Meia Banana Nevada</span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-xs font-black uppercase text-primary">Sexta-feira</span>
+                      <span className="text-sm text-foreground">Meia Carne Seca + Meia Rapadura</span>
+                    </div>
+                  </div>
                 </div>
               </Secao>
-            ))}
+            ) : (
+              Array.from({ length: maxSabores }).map((_, index) => (
+                <Secao
+                  key={index}
+                  titulo={`${["Primeiro", "Segundo", "Terceiro"][index]} sabor`}
+                  obrigatorio={index === 0}
+                  opcional={index > 0}
+                >
+                  <div className="grid gap-2">
+                    {todosSabores
+                      .filter((s) => !principal || s.categoriaId === principal.categoriaId)
+                      .map((s) => (
+                        <Opcao
+                          key={s.id}
+                          ativo={sabores[index] === s.id}
+                          titulo={s.nome}
+                          subtitulo={s.descricao}
+                          valor={tamanho ? brl(s.precos[tamanho]) : "—"}
+                          onClick={() => alternarSabor(s.id, index)}
+                        />
+                      ))}
+                  </div>
+                </Secao>
+              ))
+            )}
 
             <Secao titulo="Borda">
               <div className="grid gap-2">
