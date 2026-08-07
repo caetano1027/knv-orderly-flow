@@ -76,13 +76,13 @@ export function montarMensagem(
   const hora = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const L: string[] = [];
 
-  L.push("🔥 #### NOVO PEDIDO #### 🔥", "");
-  L.push(`#️⃣ Nº do Pedido: ${numero} 🔢`, "");
-  L.push(`🗓 Data: ${data}`, "");
-  L.push(`🕒 Horário: ${hora}`, "");
-  L.push("👤 Cliente:", cliente.nome, "");
-  L.push("📞 Telefone:", cliente.telefone, "");
-  L.push("🛵 Tipo:", cliente.tipo === "entrega" ? "Entrega 🛵" : "Retirada 🏪", "");
+  L.push("🔥 *#### NOVO PEDIDO ####* 🔥", "");
+  L.push(`#️⃣ *Nº do Pedido:* ${numero} 🔢`, "");
+  L.push(`🗓 *Data:* ${data}`, "");
+  L.push(`🕒 *Horário:* ${hora}`, "");
+  L.push("👤 *Cliente:*", cliente.nome, "");
+  L.push("📞 *Telefone:*", cliente.telefone, "");
+  L.push("🛵 *Tipo:*", cliente.tipo === "entrega" ? "Entrega 🛵" : "Retirada 🏪", "");
 
   if (cliente.tipo === "entrega") {
     const e = cliente.endereco;
