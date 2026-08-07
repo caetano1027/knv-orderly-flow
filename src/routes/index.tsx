@@ -113,7 +113,7 @@ function Cardapio() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           />
-          <h1 className="sr-only">
+          <h1 className="text-3xl font-black leading-tight text-foreground sm:text-5xl">
             {store.nome}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground sm:text-base">{store.slogan}</p>
