@@ -141,7 +141,7 @@ export const categorias: Categoria[] = [
       {
         id: "romeu-julieta",
         nome: "Romeu e Julieta",
-        descricao: "com terra e sem carne",
+        descricao: "Mussarela with guava paste",
         imagem: pizzaDoce,
         precos: { pequena: 39.9, grande: 58.9 },
         categoriaId: "pizzas-doces",
