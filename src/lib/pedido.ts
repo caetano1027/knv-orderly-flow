@@ -140,7 +140,7 @@ export function montarMensagem(
     L.push("💵 *Troco para:*", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
   }
 
-  L.push(LINHA, "", "⏱ Prazo estimado", "", `*${store.prazoEstimado}*`, "");
+  L.push(LINHA, "", "⏱ *Prazo estimado*", "", `*${store.prazoEstimado}*`, "");
   L.push(`Obrigado por escolher o *${store.nome}* ❤️`);
 
   return L.join("\n");
