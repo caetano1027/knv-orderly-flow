@@ -8,7 +8,7 @@ import { PizzaModal } from "@/components/cardapio/PizzaModal";
 import { EsfihaModal } from "@/components/cardapio/EsfihaModal";
 import { BebidaModal } from "@/components/cardapio/BebidaModal";
 import { Cart } from "@/components/cardapio/Cart";
-import { categorias, promocoes, tamanhos } from "@/config/menu";
+import { type Bebida, type Esfiha, type Sabor, categorias, promocoes, tamanhos } from "@/config/menu";
 import { statusLoja, store } from "@/config/store";
 import { brl } from "@/lib/format";
 import {
@@ -87,7 +87,7 @@ function Cardapio() {
       setEsfihaEdicao(item);
       setEsfihaId(item.esfihaId);
       setEsfihaAberta(true);
-    } else {
+    } else if (item.tipo === "bebida") {
       setBebidaEdicao(item);
       setBebidaId(item.bebidaId);
       setBebidaAberta(true);
@@ -198,30 +198,30 @@ function Cardapio() {
             <section key={categoria.id} id={categoria.id} className="mb-8 scroll-mt-20">
               <h2 className="mb-3 text-xl font-black text-foreground">{categoria.nome}</h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                {categoria.tipo === "pizza" && categoria.itens.map((sabor) => (
+                {categoria.tipo === "pizza" && (categoria.itens as Sabor[]).map((sabor) => (
                   <ProductCard
                     key={sabor.id}
                     nome={sabor.nome}
                     descricao={sabor.descricao}
                     imagem={sabor.imagem}
-                    selo={"selo" in sabor ? (sabor as any).selo : undefined}
+                    selo={sabor.selo}
                     prefixoPreco="a partir de"
                     preco={Math.min(...tamanhos.map((t) => sabor.precos[t.id]))}
                     onClick={() => abrirPizza(sabor.id)}
                   />
                 ))}
-                {categoria.tipo === "esfiha" && categoria.itens.map((esfiha) => (
+                {categoria.tipo === "esfiha" && (categoria.itens as Esfiha[]).map((esfiha) => (
                   <ProductCard
                     key={esfiha.id}
                     nome={esfiha.nome}
                     descricao={esfiha.descricao}
                     imagem={esfiha.imagem}
-                    selo={"selo" in esfiha ? (esfiha as any).selo : undefined}
-                    preco={"preco" in esfiha ? (esfiha as any).preco : 0}
+                    selo={esfiha.selo}
+                    preco={esfiha.preco}
                     onClick={() => abrirEsfiha(esfiha.id)}
                   />
                 ))}
-                {categoria.tipo === "bebida" && categoria.itens.map((bebida) => (
+                {categoria.tipo === "bebida" && (categoria.itens as Bebida[]).map((bebida) => (
                   <ProductCard
                     key={bebida.id}
                     nome={bebida.nome}
