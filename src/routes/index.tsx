@@ -204,7 +204,7 @@ function Cardapio() {
                     nome={sabor.nome}
                     descricao={sabor.descricao}
                     imagem={sabor.imagem}
-                    selo={sabor.selo}
+                    selo={"selo" in sabor ? (sabor as any).selo : undefined}
                     prefixoPreco="a partir de"
                     preco={Math.min(...tamanhos.map((t) => sabor.precos[t.id]))}
                     onClick={() => abrirPizza(sabor.id)}
@@ -216,8 +216,8 @@ function Cardapio() {
                     nome={esfiha.nome}
                     descricao={esfiha.descricao}
                     imagem={esfiha.imagem}
-                    selo={esfiha.selo}
-                    preco={esfiha.preco}
+                    selo={"selo" in esfiha ? (esfiha as any).selo : undefined}
+                    preco={"preco" in esfiha ? (esfiha as any).preco : 0}
                     onClick={() => abrirEsfiha(esfiha.id)}
                   />
                 ))}
