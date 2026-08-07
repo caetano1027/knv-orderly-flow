@@ -6,6 +6,7 @@
 import pizzaSalgada from "@/assets/pizza-salgada.jpg";
 import pizzaDoce from "@/assets/pizza-doce.jpg";
 import esfihaImg from "@/assets/esfiha.jpg";
+import bebidaImg from "@/assets/esfiha.jpg"; // Placeholder para bebidas
 
 export type TamanhoId = "pequena" | "grande";
 
@@ -41,9 +42,18 @@ export type Esfiha = {
   selo?: string;
 };
 
+export type Bebida = {
+  id: string;
+  nome: string;
+  descricao: string;
+  imagem: string;
+  opcoes: { id: string; nome: string; preco: number }[];
+};
+
 export type Categoria =
   | { id: "pizzas-salgadas" | "pizzas-doces"; nome: string; tipo: "pizza"; itens: Sabor[] }
-  | { id: string; nome: string; tipo: "esfiha"; itens: Esfiha[] };
+  | { id: "esfihas"; nome: string; tipo: "esfiha"; itens: Esfiha[] }
+  | { id: "bebidas"; nome: string; tipo: "bebida"; itens: Bebida[] };
 
 export const tamanhos: Tamanho[] = [
   { id: "pequena", nome: "Pequena", descricao: "25 cm • 4 fatias • até 2 sabores", maxSabores: 2 },
@@ -191,6 +201,61 @@ export const categorias: Categoria[] = [
       },
     ],
   },
+  {
+    id: "bebidas",
+    nome: "Bebidas",
+    tipo: "bebida",
+    itens: [
+      {
+        id: "refri-lata",
+        nome: "🥤 Refrigerante Lata",
+        descricao: "350ml • Escolha o sabor",
+        imagem: bebidaImg,
+        opcoes: [
+          { id: "coca", nome: "Coca-Cola", preco: 6.5 },
+          { id: "coca-zero", nome: "Coca-Cola Zero", preco: 6.5 },
+          { id: "guarana", nome: "Guaraná Antarctica", preco: 6.0 },
+          { id: "guarana-zero", nome: "Guaraná Antarctica Zero", preco: 6.0 },
+          { id: "fanta-laranja", nome: "Fanta Laranja", preco: 6.0 },
+          { id: "fanta-uva", nome: "Fanta Uva", preco: 6.0 },
+          { id: "sprite", nome: "Sprite", preco: 6.0 },
+          { id: "sprite-zero", nome: "Sprite Zero", preco: 6.0 },
+          { id: "pepsi", nome: "Pepsi", preco: 6.0 },
+          { id: "pepsi-black", nome: "Pepsi Black", preco: 6.0 },
+          { id: "sukita-laranja", nome: "Sukita Laranja", preco: 6.0 },
+          { id: "suco-laranja", nome: "Suco de Laranja", preco: 8.0 },
+          { id: "suco-uva", nome: "Suco de Uva", preco: 8.0 },
+          { id: "suco-limao", nome: "Suco de Limão", preco: 8.0 },
+        ],
+      },
+      {
+        id: "refri-1l",
+        nome: "🥤 Refrigerante 1 Litro",
+        descricao: "Garrafa 1L • Escolha o sabor",
+        imagem: bebidaImg,
+        opcoes: [
+          { id: "coca", nome: "Coca-Cola", preco: 10.9 },
+          { id: "guarana", nome: "Guaraná Antarctica", preco: 9.9 },
+          { id: "fanta-laranja", nome: "Fanta Laranja", preco: 9.9 },
+          { id: "sprite", nome: "Sprite", preco: 9.9 },
+        ],
+      },
+      {
+        id: "refri-2l",
+        nome: "🥤 Refrigerante 2 Litros",
+        descricao: "Garrafa 2L • Escolha o sabor",
+        imagem: bebidaImg,
+        opcoes: [
+          { id: "coca", nome: "Coca-Cola", preco: 14.9 },
+          { id: "coca-zero", nome: "Coca-Cola Zero", preco: 14.9 },
+          { id: "guarana", nome: "Guaraná Antarctica", preco: 12.9 },
+          { id: "fanta-laranja", nome: "Fanta Laranja", preco: 12.9 },
+          { id: "pepsi", nome: "Pepsi", preco: 12.9 },
+          { id: "sukita-laranja", nome: "Sukita Laranja", preco: 12.9 },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Promoções exibidas no topo (deixe a lista vazia para ocultar) */
@@ -211,7 +276,12 @@ export const todasEsfihas = categorias
   .filter((c): c is Extract<Categoria, { tipo: "esfiha" }> => c.tipo === "esfiha")
   .flatMap((c) => c.itens);
 
+export const todasBebidas = categorias
+  .filter((c): c is Extract<Categoria, { tipo: "bebida" }> => c.tipo === "bebida")
+  .flatMap((c) => c.itens);
+
 export const getSabor = (id: string) => todosSabores.find((s) => s.id === id);
 export const getEsfiha = (id: string) => todasEsfihas.find((s) => s.id === id);
+export const getBebida = (id: string) => todasBebidas.find((s) => s.id === id);
 export const getTamanho = (id: TamanhoId) => tamanhos.find((t) => t.id === id)!;
 export const getBorda = (id: string) => bordas.find((b) => b.id === id)!;

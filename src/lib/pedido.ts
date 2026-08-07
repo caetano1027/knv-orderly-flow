@@ -1,4 +1,4 @@
-import { getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
+import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
 import { store } from "@/config/store";
 import { brlNum } from "@/lib/format";
 import { precoItem, type CartItem } from "@/lib/cart";
@@ -108,16 +108,21 @@ export function montarMensagem(
     if (item.tipo === "pizza") {
       const isPizzaDia = item.sabores.includes("pizza-dia");
       if (isPizzaDia) {
-        L.push("*Pizza do Dia*");
+        L.push(`*${item.quantidade} x Pizza do Dia*`);
       } else {
         L.push(`*${item.quantidade} x Pizza ${getTamanho(item.tamanho).nome}*`);
         L.push("Sabores:");
         for (const s of item.sabores) L.push(`• ${getSabor(s)?.nome ?? s}`);
       }
       L.push(`Borda: ${getBorda(item.borda)?.nome ?? "Sem borda"}`);
-    } else {
+    } else if (item.tipo === "esfiha") {
       L.push(`*${item.quantidade} x Esfiha*`);
       L.push(`Sabor: ${getEsfiha(item.esfihaId)?.nome ?? item.esfihaId}`);
+    } else {
+      const bebida = getBebida(item.bebidaId);
+      const opcao = bebida?.opcoes.find(o => o.id === item.opcaoId);
+      L.push(`*${item.quantidade} x ${bebida?.nome ?? "Bebida"}*`);
+      L.push(`• ${opcao?.nome ?? "Sabor não selecionado"}`);
     }
     
     if (item.observacao) L.push(`Obs: ${item.observacao}`);

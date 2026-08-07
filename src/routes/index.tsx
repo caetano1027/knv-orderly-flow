@@ -6,8 +6,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { ProductCard } from "@/components/cardapio/ProductCard";
 import { PizzaModal } from "@/components/cardapio/PizzaModal";
 import { EsfihaModal } from "@/components/cardapio/EsfihaModal";
+import { BebidaModal } from "@/components/cardapio/BebidaModal";
 import { Cart } from "@/components/cardapio/Cart";
-import { categorias, promocoes, tamanhos } from "@/config/menu";
+import { type Bebida, type Esfiha, type Sabor, categorias, promocoes, tamanhos } from "@/config/menu";
 import { statusLoja, store } from "@/config/store";
 import { brl } from "@/lib/format";
 import {
@@ -16,6 +17,7 @@ import {
   type CartItem,
   type EsfihaItem,
   type PizzaItem,
+  type BebidaItem,
 } from "@/lib/cart";
 import heroBanner from "@/assets/hero-banner.jpg";
 import logoAsset from "@/assets/logo.png.asset.json";
@@ -50,6 +52,9 @@ function Cardapio() {
   const [esfihaAberta, setEsfihaAberta] = useState(false);
   const [esfihaId, setEsfihaId] = useState<string | null>(null);
   const [esfihaEdicao, setEsfihaEdicao] = useState<EsfihaItem | null>(null);
+  const [bebidaAberta, setBebidaAberta] = useState(false);
+  const [bebidaId, setBebidaId] = useState<string | null>(null);
+  const [bebidaEdicao, setBebidaEdicao] = useState<BebidaItem | null>(null);
   const [carrinhoMobile, setCarrinhoMobile] = useState(false);
 
   const status = statusLoja();
@@ -65,6 +70,12 @@ function Cardapio() {
     setEsfihaId(id);
     setEsfihaAberta(true);
   };
+  
+  const abrirBebida = (id: string) => {
+    setBebidaEdicao(null);
+    setBebidaId(id);
+    setBebidaAberta(true);
+  };
 
   const editarItem = (item: CartItem) => {
     setCarrinhoMobile(false);
@@ -72,10 +83,14 @@ function Cardapio() {
       setPizzaEdicao(item);
       setSaborInicial(null);
       setPizzaAberta(true);
-    } else {
+    } else if (item.tipo === "esfiha") {
       setEsfihaEdicao(item);
       setEsfihaId(item.esfihaId);
       setEsfihaAberta(true);
+    } else if (item.tipo === "bebida") {
+      setBebidaEdicao(item);
+      setBebidaId(item.bebidaId);
+      setBebidaAberta(true);
     }
   };
 
@@ -84,8 +99,10 @@ function Cardapio() {
     else adicionar(dados);
     setPizzaAberta(false);
     setEsfihaAberta(false);
+    setBebidaAberta(false);
     setPizzaEdicao(null);
     setEsfihaEdicao(null);
+    setBebidaEdicao(null);
   };
 
   return (
@@ -181,30 +198,40 @@ function Cardapio() {
             <section key={categoria.id} id={categoria.id} className="mb-8 scroll-mt-20">
               <h2 className="mb-3 text-xl font-black text-foreground">{categoria.nome}</h2>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                {categoria.tipo === "pizza"
-                  ? categoria.itens.map((sabor) => (
-                      <ProductCard
-                        key={sabor.id}
-                        nome={sabor.nome}
-                        descricao={sabor.descricao}
-                        imagem={sabor.imagem}
-                        selo={sabor.selo}
-                        prefixoPreco="a partir de"
-                        preco={Math.min(...tamanhos.map((t) => sabor.precos[t.id]))}
-                        onClick={() => abrirPizza(sabor.id)}
-                      />
-                    ))
-                  : categoria.itens.map((esfiha) => (
-                      <ProductCard
-                        key={esfiha.id}
-                        nome={esfiha.nome}
-                        descricao={esfiha.descricao}
-                        imagem={esfiha.imagem}
-                        selo={esfiha.selo}
-                        preco={esfiha.preco}
-                        onClick={() => abrirEsfiha(esfiha.id)}
-                      />
-                    ))}
+                {categoria.tipo === "pizza" && (categoria.itens as Sabor[]).map((sabor) => (
+                  <ProductCard
+                    key={sabor.id}
+                    nome={sabor.nome}
+                    descricao={sabor.descricao}
+                    imagem={sabor.imagem}
+                    selo={sabor.selo}
+                    prefixoPreco="a partir de"
+                    preco={Math.min(...tamanhos.map((t) => sabor.precos[t.id]))}
+                    onClick={() => abrirPizza(sabor.id)}
+                  />
+                ))}
+                {categoria.tipo === "esfiha" && (categoria.itens as Esfiha[]).map((esfiha) => (
+                  <ProductCard
+                    key={esfiha.id}
+                    nome={esfiha.nome}
+                    descricao={esfiha.descricao}
+                    imagem={esfiha.imagem}
+                    selo={esfiha.selo}
+                    preco={esfiha.preco}
+                    onClick={() => abrirEsfiha(esfiha.id)}
+                  />
+                ))}
+                {categoria.tipo === "bebida" && (categoria.itens as Bebida[]).map((bebida) => (
+                  <ProductCard
+                    key={bebida.id}
+                    nome={bebida.nome}
+                    descricao={bebida.descricao}
+                    imagem={bebida.imagem}
+                    preco={Math.min(...bebida.opcoes.map(o => o.preco))}
+                    prefixoPreco="a partir de"
+                    onClick={() => abrirBebida(bebida.id)}
+                  />
+                ))}
               </div>
             </section>
           ))}
@@ -282,6 +309,13 @@ function Cardapio() {
         onFechar={() => setEsfihaAberta(false)}
         esfihaId={esfihaId}
         itemEdicao={esfihaEdicao}
+        onConfirmar={confirmar}
+      />
+      <BebidaModal
+        aberto={bebidaAberta}
+        onFechar={() => setBebidaAberta(false)}
+        bebidaId={bebidaId}
+        itemEdicao={bebidaEdicao}
         onConfirmar={confirmar}
       />
     </div>

@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { getBorda, getEsfiha, getSabor, type TamanhoId } from "@/config/menu";
+import { getBebida, getBorda, getEsfiha, getSabor, type TamanhoId } from "@/config/menu";
 import { store } from "@/config/store";
 
 export type PizzaItem = {
@@ -28,9 +28,22 @@ export type EsfihaItem = {
   observacao: string;
 };
 
-export type CartItem = PizzaItem | EsfihaItem;
+export type BebidaItem = {
+  uid: string;
+  tipo: "bebida";
+  bebidaId: string;
+  opcaoId: string;
+  quantidade: number;
+  observacao: string;
+};
+
+export type CartItem = PizzaItem | EsfihaItem | BebidaItem;
 
 export function precoUnitario(item: CartItem): number {
+  if (item.tipo === "bebida") {
+    const bebida = getBebida(item.bebidaId);
+    return bebida?.opcoes.find((o) => o.id === item.opcaoId)?.preco ?? 0;
+  }
   if (item.tipo === "esfiha") {
     return getEsfiha(item.esfihaId)?.preco ?? 0;
   }

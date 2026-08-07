@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { SuccessToast } from "../ui/SuccessToast";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
-import { getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
+import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
 import { store } from "@/config/store";
 import { brl } from "@/lib/format";
 import { precoItem, useCart, type CartItem } from "@/lib/cart";
@@ -87,7 +87,7 @@ export function Cart({
             <p className="text-sm text-muted-foreground">
               Seu pedido está vazio.
               <br />
-              Escolha uma pizza ou esfiha para começar.
+              Escolha uma pizza, esfiha ou bebida para começar.
             </p>
           </div>
         ) : (
@@ -362,12 +362,20 @@ function tituloItem(item: CartItem) {
   if (item.tipo === "esfiha") {
     return `${item.quantidade}x ${getEsfiha(item.esfihaId)?.nome ?? "Esfiha"}`;
   }
-  const nomes = item.sabores.map((s) => getSabor(s)?.nome ?? s).join(" / ");
+  if (item.tipo === "bebida") {
+    return `${item.quantidade}x ${getBebida(item.bebidaId)?.nome ?? "Bebida"}`;
+  }
+  const nomes = item.sabores.map((s: string) => getSabor(s)?.nome ?? s).join(" / ");
   return `${item.quantidade}x Pizza ${nomes}`;
 }
 
 function detalheItem(item: CartItem) {
   if (item.tipo === "esfiha") return "Esfiha assada na hora";
+  if (item.tipo === "bebida") {
+    const bebida = getBebida(item.bebidaId);
+    const opcao = bebida?.opcoes.find((o) => o.id === item.opcaoId);
+    return opcao?.nome ?? "Sabor não selecionado";
+  }
   const borda = getBorda(item.borda);
   return `${getTamanho(item.tamanho).nome} • Borda: ${borda?.nome ?? "Sem borda"}`;
 }
