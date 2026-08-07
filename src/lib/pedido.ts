@@ -77,7 +77,7 @@ export function montarMensagem(
   const L: string[] = [];
 
   L.push("🔥 #### NOVO PEDIDO #### 🔥", "");
-  L.push(`#️⃣ Nº do Pedido: ${numero}`, "");
+  L.push(`#️⃣ Nº do Pedido: ${numero} 🔢`, "");
   L.push(`🗓 Data: ${data}`, "");
   L.push(`🕒 Horário: ${hora}`, "");
   L.push("👤 Cliente:", cliente.nome, "");
