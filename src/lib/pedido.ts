@@ -120,28 +120,28 @@ export function montarMensagem(
   }
 
   if (esfihas.length) {
-    L.push(LINHA, "", "🥟 ESFIHAS", "");
+    L.push(LINHA, "", "🥟 ITENS DO PEDIDO (ESFIHAS)", "");
     for (const item of esfihas) {
       if (item.tipo !== "esfiha") continue;
-      L.push(`${item.quantidade} x Esfiha`, "");
-      L.push("Sabor:", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
-      L.push("Observações:", item.observacao || "-", "");
-      L.push("Valor:", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push(`🥟 *${item.quantidade} x Esfiha*`, "");
+      L.push("✨ Sabor:", getEsfiha(item.esfihaId)?.nome ?? item.esfihaId, "");
+      L.push("📝 Observações:", item.observacao || "-", "");
+      L.push("💵 Valor:", `R$ ${brlNum(precoItem(item))}`, "");
     }
   }
 
   L.push(LINHA, "", "💰 RESUMO", "");
-  L.push("Subtotal:", `R$ ${brlNum(totais.subtotal)}`, "");
-  L.push("Entrega:", `R$ ${brlNum(totais.entrega)}`, "");
-  L.push("Valor Total:", `R$ ${brlNum(totais.total)}`, "");
+  L.push("🔹 Subtotal:", `R$ ${brlNum(totais.subtotal)}`, "");
+  L.push("🔹 Entrega:", `R$ ${brlNum(totais.entrega)}`, "");
+  L.push("✅ *Valor Total:*", `*R$ ${brlNum(totais.total)}*`, "");
 
-  L.push(LINHA, "", "💳 Pagamento", "", cliente.pagamento, "");
+  L.push(LINHA, "", "💳 Pagamento", "", `*${cliente.pagamento}*`, "");
   if (cliente.pagamento === "Dinheiro") {
-    L.push("Troco para:", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
+    L.push("💵 Troco para:", cliente.precisaTroco ? `R$ ${cliente.trocoPara}` : "Não precisa de troco", "");
   }
 
-  L.push(LINHA, "", "⏱ Prazo estimado", "", store.prazoEstimado, "");
-  L.push(`Obrigado por escolher o ${store.nome} ❤️`);
+  L.push(LINHA, "", "⏱ Prazo estimado", "", `*${store.prazoEstimado}*`, "");
+  L.push(`Obrigado por escolher o *${store.nome}* ❤️`);
 
   return L.join("\n");
 }
