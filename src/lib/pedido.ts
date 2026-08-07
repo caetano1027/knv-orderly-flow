@@ -76,23 +76,23 @@ export function montarMensagem(
   const hora = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const L: string[] = [];
 
-  L.push("#### NOVO PEDIDO ####", "");
+  L.push("🔥 #### NOVO PEDIDO #### 🔥", "");
   L.push(`#️⃣ Nº do Pedido: ${numero}`, "");
   L.push(`🗓 Data: ${data}`, "");
   L.push(`🕒 Horário: ${hora}`, "");
   L.push("👤 Cliente:", cliente.nome, "");
   L.push("📞 Telefone:", cliente.telefone, "");
-  L.push("🛵 Tipo:", cliente.tipo === "entrega" ? "Entrega" : "Retirada", "");
+  L.push("🛵 Tipo:", cliente.tipo === "entrega" ? "Entrega 🛵" : "Retirada 🏪", "");
 
   if (cliente.tipo === "entrega") {
     const e = cliente.endereco;
     L.push("📍 Endereço:", "");
-    L.push(`Rua: ${e.rua}`);
-    L.push(`Número: ${e.numero}`);
-    L.push(`Complemento: ${e.complemento || "-"}`);
-    L.push(`Bairro: ${e.bairro}`);
-    L.push(`Cidade: ${e.cidade}`);
-    L.push(`CEP: ${e.cep}`, "");
+    L.push(`🏘 Rua: ${e.rua}`);
+    L.push(`🔢 Número: ${e.numero}`);
+    L.push(`🏢 Complemento: ${e.complemento || "-"}`);
+    L.push(`🏘 Bairro: ${e.bairro}`);
+    L.push(`🏙 Cidade: ${e.cidade}`);
+    L.push(`📫 CEP: ${e.cep}`, "");
     L.push("🌎 Link do endereço:", linkMaps(e), "");
   }
 
@@ -100,22 +100,22 @@ export function montarMensagem(
   const esfihas = itens.filter((i) => i.tipo === "esfiha");
 
   if (pizzas.length) {
-    L.push(LINHA, "", "🍕 ITENS DO PEDIDO", "");
+    L.push(LINHA, "", "🍕 ITENS DO PEDIDO (PIZZAS)", "");
     for (const item of pizzas) {
       if (item.tipo !== "pizza") continue;
       const isPizzaDia = item.sabores.includes("pizza-dia");
       if (isPizzaDia) {
-        L.push("🍕 Pizza do Dia", "");
+        L.push("🍕 *Pizza do Dia*", "");
       } else {
-        L.push(`${item.quantidade} x Pizza`, "");
-        L.push("Tamanho:", getTamanho(item.tamanho).nome, "");
-        L.push("Sabores:");
-        for (const s of item.sabores) L.push(`- ${getSabor(s)?.nome ?? s}`);
+        L.push(`🍕 *${item.quantidade} x Pizza*`, "");
+        L.push("📐 Tamanho:", getTamanho(item.tamanho).nome, "");
+        L.push("✨ Sabores:");
+        for (const s of item.sabores) L.push(`  • ${getSabor(s)?.nome ?? s}`);
         L.push("");
       }
-      L.push("Borda:", getBorda(item.borda)?.nome ?? "Sem borda", "");
-      L.push("Observações:", item.observacao || "-", "");
-      L.push("Valor:", `R$ ${brlNum(precoItem(item))}`, "");
+      L.push("🥖 Borda:", getBorda(item.borda)?.nome ?? "Sem borda", "");
+      L.push("📝 Observações:", item.observacao || "-", "");
+      L.push("💵 Valor:", `R$ ${brlNum(precoItem(item))}`, "");
     }
   }
 
