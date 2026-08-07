@@ -131,8 +131,8 @@ export function montarMensagem(
   }
 
   L.push(LINHA, "", "💰 RESUMO", "");
-  L.push("🔹 Subtotal:", `R$ ${brlNum(totais.subtotal)}`, "");
-  L.push("🔹 Entrega:", `R$ ${brlNum(totais.entrega)}`, "");
+  L.push("🔹 *Subtotal:*", `R$ ${brlNum(totais.subtotal)}`, "");
+  L.push("🔹 *Entrega:*", `R$ ${brlNum(totais.entrega)}`, "");
   L.push("✅ *Valor Total:*", `*R$ ${brlNum(totais.total)}*`, "");
 
   L.push(LINHA, "", "💳 Pagamento", "", `*${cliente.pagamento}*`, "");
