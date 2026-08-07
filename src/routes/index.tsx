@@ -18,6 +18,7 @@ import {
   type PizzaItem,
 } from "@/lib/cart";
 import heroBanner from "@/assets/hero-banner.jpg";
+import logoAsset from "@/assets/logo.png.asset.json";
 
 const titulo = `${store.nome} — Pizzas e Esfihas com entrega`;
 const descricao =
@@ -104,6 +105,14 @@ function Cardapio() {
           transition={{ duration: 0.5 }}
           className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-6 sm:pb-8"
         >
+          <motion.img
+            src={logoAsset.url}
+            alt="KNV Cozinha de Fogo Logo"
+            className="mb-4 h-24 w-auto sm:h-32"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          />
           <h1 className="text-3xl font-black leading-tight text-foreground sm:text-5xl">
             {store.nome}
           </h1>
