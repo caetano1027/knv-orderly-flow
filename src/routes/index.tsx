@@ -108,7 +108,7 @@ function Cardapio() {
           <motion.img
             src={logoAsset.url}
             alt="KNV Cozinha de Fogo Logo"
-            className="mb-4 h-24 w-auto sm:h-32"
+            className="mb-2 h-24 w-auto sm:h-32"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
