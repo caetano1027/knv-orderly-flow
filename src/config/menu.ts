@@ -224,9 +224,6 @@ export const categorias: Categoria[] = [
           { id: "pepsi", nome: "Pepsi", preco: 6.0 },
           { id: "pepsi-black", nome: "Pepsi Black", preco: 6.0 },
           { id: "sukita-laranja", nome: "Sukita Laranja", preco: 6.0 },
-          { id: "suco-laranja", nome: "Suco de Laranja", preco: 8.0 },
-          { id: "suco-uva", nome: "Suco de Uva", preco: 8.0 },
-          { id: "suco-limao", nome: "Suco de Limão", preco: 8.0 },
         ],
       },
       {
@@ -253,6 +250,17 @@ export const categorias: Categoria[] = [
           { id: "fanta-laranja", nome: "Fanta Laranja", preco: 12.9 },
           { id: "pepsi", nome: "Pepsi", preco: 12.9 },
           { id: "sukita-laranja", nome: "Sukita Laranja", preco: 12.9 },
+        ],
+      },
+      {
+        id: "sucos",
+        nome: "🧃 Sucos",
+        descricao: "Copo • Escolha o sabor",
+        imagem: bebidaImg,
+        opcoes: [
+          { id: "suco-laranja", nome: "Suco de Laranja", preco: 8.0 },
+          { id: "suco-uva", nome: "Suco de Uva", preco: 8.0 },
+          { id: "suco-limao", nome: "Suco de Limão", preco: 8.0 },
         ],
       },
     ],
