@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Clock, Flame, ShoppingBag, Star } from "lucide-react";
@@ -56,8 +56,11 @@ function Cardapio() {
   const [bebidaId, setBebidaId] = useState<string | null>(null);
   const [bebidaEdicao, setBebidaEdicao] = useState<BebidaItem | null>(null);
   const [carrinhoMobile, setCarrinhoMobile] = useState(false);
+  const [status, setStatus] = useState({ aberta: false, texto: "" });
 
-  const status = statusLoja();
+  useEffect(() => {
+    setStatus(statusLoja());
+  }, []);
 
   const abrirPizza = (sabor: string) => {
     setPizzaEdicao(null);
