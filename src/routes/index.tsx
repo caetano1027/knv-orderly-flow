@@ -56,8 +56,11 @@ function Cardapio() {
   const [bebidaId, setBebidaId] = useState<string | null>(null);
   const [bebidaEdicao, setBebidaEdicao] = useState<BebidaItem | null>(null);
   const [carrinhoMobile, setCarrinhoMobile] = useState(false);
+  const [status, setStatus] = useState({ aberta: false, texto: "" });
 
-  const status = statusLoja();
+  useEffect(() => {
+    setStatus(statusLoja());
+  }, []);
 
   const abrirPizza = (sabor: string) => {
     setPizzaEdicao(null);
