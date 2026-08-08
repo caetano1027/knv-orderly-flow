@@ -27,8 +27,8 @@ export const store = {
     2: { abre: "18:00", fecha: "23:00" },
     3: { abre: "18:00", fecha: "23:00" },
     4: { abre: "18:00", fecha: "23:00" },
-    5: { abre: "18:00", fecha: "23:59" },
-    6: { abre: "18:00", fecha: "23:59" },
+    5: { abre: "18:00", fecha: "23:00" },
+    6: { abre: "18:00", fecha: "23:00" },
   } as Record<number, { abre: string; fecha: string } | null>,
   /** Permitir pedidos mesmo com a loja fechada */
   aceitarPedidosFechado: true,
