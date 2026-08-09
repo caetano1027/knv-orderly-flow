@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { MapPin, Pencil, ShoppingBag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { SuccessToast } from "../ui/SuccessToast";
+import { WhatsAppOrderTransition } from "./WhatsAppOrderTransition";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
 import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
@@ -26,6 +27,10 @@ export function Cart({
   onEnviado?: () => void;
 }) {
   const { itens, subtotal, totalItens, mudarQuantidade, remover, limpar } = useCart();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
+  const [currentOrderNumber, setCurrentOrderNumber] = useState("");
+
   const [cliente, setCliente] = useState<DadosCliente>({
     nome: "",
     telefone: "",
@@ -60,19 +65,34 @@ export function Cart({
   );
 
   const enviar = () => {
-    if (!podeEnviar) return;
+    if (!podeEnviar || isSubmitting) return;
+    
+    setIsSubmitting(true);
     const numero = proximoNumeroPedido();
-    const mensagem = montarMensagem(itens, cliente, { subtotal, entrega, total }, numero);
-    window.open(linkWhatsApp(mensagem), "_blank", "noopener,noreferrer");
-    toast.custom((t) => (
-      <SuccessToast 
-        title={`Pedido nº ${numero}`}
-        description="Enviado para o WhatsApp com sucesso!"
-        onClose={() => toast.dismiss(t)}
-      />
-    ));
-    limpar();
-    onEnviado?.();
+    setCurrentOrderNumber(numero);
+    setShowTransition(true);
+  };
+
+  const handleFinishOrder = () => {
+    const mensagem = montarMensagem(itens, cliente, { subtotal, entrega, total }, currentOrderNumber);
+    
+    try {
+      window.open(linkWhatsApp(mensagem), "_blank", "noopener,noreferrer");
+      
+      toast.custom((t) => (
+        <SuccessToast 
+          title={`Pedido nº ${currentOrderNumber}`}
+          description="Enviado para o WhatsApp com sucesso!"
+          onClose={() => toast.dismiss(t)}
+        />
+      ));
+      
+      limpar();
+      onEnviado?.();
+    } catch (error) {
+      console.error("Erro ao abrir WhatsApp:", error);
+      setIsSubmitting(false); // Permite tentar novamente se falhar a abertura
+    }
   };
 
   const setEndereco = (campo: keyof typeof enderecoVazio, valor: string) =>
@@ -344,16 +364,26 @@ export function Cart({
         <motion.button
           type="button"
           onClick={enviar}
-          disabled={!podeEnviar}
+          disabled={!podeEnviar || isSubmitting}
           whileTap={{ scale: 0.98 }}
           className="gradiente-fogo mt-3 flex w-full items-center justify-center rounded-xl px-5 py-4 text-base font-bold text-primary-foreground shadow-lg transition-all active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Enviar Pedido pelo WhatsApp
+          {isSubmitting ? "Processando..." : "Enviar Pedido pelo WhatsApp"}
         </motion.button>
         <p className="mt-2 text-center text-[11px] text-muted-foreground">
           Prazo estimado: {store.prazoEstimado}
         </p>
       </div>
+
+      <AnimatePresence>
+        {showTransition && (
+          <WhatsAppOrderTransition
+            orderNumber={currentOrderNumber}
+            onComplete={handleFinishOrder}
+            onRetry={handleFinishOrder}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
