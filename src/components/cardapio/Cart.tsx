@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { MapPin, Pencil, ShoppingBag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { SuccessToast } from "../ui/SuccessToast";
+import { WhatsAppOrderTransition } from "./WhatsAppOrderTransition";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
 import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
@@ -26,6 +27,10 @@ export function Cart({
   onEnviado?: () => void;
 }) {
   const { itens, subtotal, totalItens, mudarQuantidade, remover, limpar } = useCart();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
+  const [currentOrderNumber, setCurrentOrderNumber] = useState("");
+
   const [cliente, setCliente] = useState<DadosCliente>({
     nome: "",
     telefone: "",
