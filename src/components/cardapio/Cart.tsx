@@ -88,6 +88,7 @@ export function Cart({
       ));
       
       limpar();
+      setShowTransition(false); // Fecha o overlay de transição
       onEnviado?.();
     } catch (error) {
       console.error("Erro ao abrir WhatsApp:", error);
