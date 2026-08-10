@@ -65,18 +65,21 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
             <DialogTitle className="text-2xl font-black text-foreground drop-shadow-sm">{esfiha.nome}</DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground bg-card/60 backdrop-blur-sm p-2 rounded-lg -mx-2">{esfiha.descricao}</DialogDescription>
           </DialogHeader>
-          <p className="mt-2 text-lg font-black text-accent drop-shadow-sm">{brl(esfiha.preco)}</p>
+          
 
-          <div className="mt-5">
-            <h4 className="mb-2 text-sm font-black uppercase tracking-wide">Observações</h4>
+          <section className="mt-6">
+            <div className="mb-3 flex items-center justify-between">
+              <h4 className="text-sm font-black uppercase tracking-wider text-foreground">Observações</h4>
+              <span className="text-[10px] font-bold uppercase text-muted-foreground">Opcional</span>
+            </div>
             <Textarea
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
               maxLength={300}
               placeholder="Ex: bem assada, sem cebola..."
-              className="min-h-20 resize-none bg-secondary text-sm"
+              className="min-h-24 resize-none bg-secondary text-sm"
             />
-          </div>
+          </section>
         </div>
 
         <div className="flex shrink-0 flex-col gap-3 border-t border-border bg-card p-4 sm:flex-row sm:items-center sm:gap-4 sm:p-5">
