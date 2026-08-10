@@ -3,7 +3,7 @@ import { Check, ChevronRight, Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogDescription } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { QuantityStepper } from "./QuantityStepper";
-import { bordas, getSabor, getTamanho, tamanhos, todosSabores, type TamanhoId } from "@/config/menu";
+import { bordas, getSabor, getTamanho, promocoes, tamanhos, todosSabores, type TamanhoId } from "@/config/menu";
 import { brl } from "@/lib/format";
 import { precoUnitario, type PizzaItem } from "@/lib/cart";
 import { toast } from "sonner";
@@ -60,6 +60,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
   }, [tamanho, sabores, borda, quantidade, observacao]);
 
   const principal = getSabor(sabores[0] ?? saborInicial ?? "");
+  const promo = promocoes.find(p => p.id === "pizza-dia");
 
   const handleConfirmar = () => {
     if (!tamanho) {
@@ -107,7 +108,7 @@ export function PizzaModal({ aberto, onFechar, saborInicial, itemEdicao, onConfi
           <div className="relative h-48 w-full shrink-0 overflow-hidden sm:h-56">
             {principal || isPizzaDia ? (
               <img
-                src={principal?.imagem || "/pizza-dia.jpg"}
+                src={isPizzaDia ? promo?.imagem : principal?.imagem}
                 alt={principal?.nome || "Pizza do Dia"}
                 className="h-full w-full object-cover"
                 width={800}

@@ -6,6 +6,7 @@
 import pizzaSalgada from "@/assets/pizza-salgada.jpg";
 import pizzaDoce from "@/assets/pizza-doce.jpg";
 import esfihaImg from "@/assets/esfiha.jpg";
+const pizzaDiaImg = "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop";
 const bebidaImg = "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=600&auto=format&fit=crop"; // Imagem de bebidas (suco/drink) do Unsplash
 
 
@@ -273,6 +274,7 @@ export const promocoes = [
     id: "pizza-dia", 
     titulo: "Pizza do Dia", 
     descricao: "Confira o sabor em destaque hoje com preço especial!",
+    imagem: pizzaDiaImg,
     categoriaId: "pizza-dia" // Flag for special modal behavior
   },
 ];
