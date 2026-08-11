@@ -110,7 +110,7 @@ function Cardapio() {
 
   return (
     <div className="min-h-screen bg-background pb-32 lg:pb-0">
-      <header className="relative h-64 w-full overflow-hidden sm:h-80 lg:h-96">
+      <header className="relative h-56 w-full overflow-hidden sm:h-80 lg:h-96">
         <img
           src={heroBanner}
           alt="Pizza artesanal saindo do forno a lenha"
@@ -186,7 +186,7 @@ function Cardapio() {
             </section>
           ) : null}
 
-          <nav className="esconder-scroll sticky top-0 z-30 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-border bg-background/95 px-4 py-3.5 backdrop-blur-md">
+          <nav className="esconder-scroll sticky top-0 z-30 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-border bg-background/95 px-4 py-3.5 backdrop-blur-md after:absolute after:right-0 after:top-0 after:h-full after:w-8 after:bg-gradient-to-l after:from-background after:to-transparent after:pointer-events-none">
             {categorias.map((c) => (
               <a
                 key={c.id}

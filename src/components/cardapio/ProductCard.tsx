@@ -50,7 +50,7 @@ export function ProductCard({
             {selo}
           </span>
         ) : null}
-        <h3 className="truncate text-base font-bold text-foreground">{nome}</h3>
+        <h3 className="line-clamp-2 text-base font-bold text-foreground sm:truncate">{nome}</h3>
         <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">{descricao}</p>
         <div className="mt-1 flex items-center gap-2">
           {prefixoPreco ? (

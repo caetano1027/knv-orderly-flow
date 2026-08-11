@@ -64,7 +64,7 @@ export function EsfihaModal({ aberto, onFechar, esfihaId, itemEdicao, onConfirma
           <DialogHeader className="relative space-y-1 text-left z-10">
             <div className="flex items-center justify-between">
               <DialogTitle className="text-2xl font-black text-foreground sm:text-3xl drop-shadow-sm">
-                {esfiha.nome}
+                <span className="line-clamp-2">{esfiha.nome}</span>
               </DialogTitle>
               <span className="text-lg font-black text-accent drop-shadow-sm">
                 {brl(esfiha.preco)}
