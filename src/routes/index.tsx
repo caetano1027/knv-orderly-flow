@@ -147,18 +147,18 @@ function Cardapio() {
               </span>
             </div>
             {status.subtexto && (
-              <p className="text-sm font-medium text-foreground">
-                {status.subtexto}
-              </p>
+              <div className="mt-1 flex flex-wrap gap-2">
+                <Badge className="bg-secondary text-muted-foreground">
+                  {status.subtexto}
+                </Badge>
+                <Badge className="bg-secondary text-muted-foreground">
+                  <Clock className="h-3.5 w-3.5" /> {store.prazoEstimado}
+                </Badge>
+                <Badge className="bg-secondary text-muted-foreground">
+                  <Star className="h-3.5 w-3.5 text-accent" /> Entrega {brl(store.taxaEntrega)}
+                </Badge>
+              </div>
             )}
-            <div className="mt-1 flex flex-wrap gap-2">
-              <Badge className="bg-secondary text-muted-foreground">
-                <Clock className="h-3.5 w-3.5" /> {store.prazoEstimado}
-              </Badge>
-              <Badge className="bg-secondary text-muted-foreground">
-                <Star className="h-3.5 w-3.5 text-accent" /> Entrega {brl(store.taxaEntrega)}
-              </Badge>
-            </div>
           </div>
         </motion.div>
       </header>
