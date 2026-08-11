@@ -56,7 +56,7 @@ function Cardapio() {
   const [bebidaId, setBebidaId] = useState<string | null>(null);
   const [bebidaEdicao, setBebidaEdicao] = useState<BebidaItem | null>(null);
   const [carrinhoMobile, setCarrinhoMobile] = useState(false);
-  const [status, setStatus] = useState({ aberta: false, texto: "" });
+  const [status, setStatus] = useState<{ aberta: boolean; texto: string; subtexto?: string }>({ aberta: false, texto: "" });
 
   useEffect(() => {
     setStatus(statusLoja());
@@ -139,25 +139,26 @@ function Cardapio() {
             {store.nome}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground sm:text-base">{store.slogan}</p>
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-            <Badge
-              className={
-                status.aberta
-                  ? "bg-emerald-500/15 text-emerald-400"
-                  : "bg-destructive/15 text-destructive"
-              }
-            >
-              <span
-                className={`h-2 w-2 rounded-full ${status.aberta ? "bg-emerald-400" : "bg-destructive"}`}
-              />
-              {status.texto}
-            </Badge>
-            <Badge className="bg-secondary text-muted-foreground">
-              <Clock className="h-3.5 w-3.5" /> {store.prazoEstimado}
-            </Badge>
-            <Badge className="bg-secondary text-muted-foreground">
-              <Star className="h-3.5 w-3.5 text-accent" /> Entrega {brl(store.taxaEntrega)}
-            </Badge>
+          <div className="mt-4 flex flex-col items-start gap-2">
+            <div className="flex items-center gap-2">
+              <span className={`h-2.5 w-2.5 rounded-full ${status.aberta ? "bg-emerald-400 sombra-glow" : "bg-destructive"}`} />
+              <span className={`text-sm font-black uppercase tracking-wider ${status.aberta ? "text-emerald-400" : "text-destructive"}`}>
+                {status.texto}
+              </span>
+            </div>
+            {status.subtexto && (
+              <p className="text-xs font-medium text-muted-foreground">
+                {status.subtexto}
+              </p>
+            )}
+            <div className="mt-1 flex flex-wrap gap-2">
+              <Badge className="bg-secondary text-muted-foreground">
+                <Clock className="h-3.5 w-3.5" /> {store.prazoEstimado}
+              </Badge>
+              <Badge className="bg-secondary text-muted-foreground">
+                <Star className="h-3.5 w-3.5 text-accent" /> Entrega {brl(store.taxaEntrega)}
+              </Badge>
+            </div>
           </div>
         </motion.div>
       </header>
