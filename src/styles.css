@@ -159,3 +159,7 @@
     border-radius: 20px;
   }
 }
+
+#lovable-badge {
+  display: none !important;
+}
