@@ -295,7 +295,7 @@ function Cardapio() {
               <ShoppingBag className="h-5 w-5 text-primary" /> Seu pedido
             </SheetTitle>
           </SheetHeader>
-          <div className="h-[calc(92vh-65px)]">
+          <div className="flex-1 min-h-0">
             <Cart onEditar={editarItem} onEnviado={() => setCarrinhoMobile(false)} />
           </div>
         </SheetContent>
