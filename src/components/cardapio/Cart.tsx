@@ -6,7 +6,7 @@ import { SuccessToast } from "../ui/SuccessToast";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
 import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
-import { store } from "@/config/store";
+import { statusLoja, store } from "@/config/store";
 import { brl } from "@/lib/format";
 import { precoItem, useCart, type CartItem } from "@/lib/cart";
 import {
