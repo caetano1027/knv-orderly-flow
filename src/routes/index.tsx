@@ -289,13 +289,13 @@ function Cardapio() {
             </SheetTrigger>
           </div>
         ) : null}
-        <SheetContent side="bottom" className="h-[92vh] gap-0 rounded-t-3xl p-0">
-          <SheetHeader className="border-b border-border p-4">
+        <SheetContent side="bottom" className="flex h-[92vh] flex-col gap-0 rounded-t-3xl p-0 overflow-hidden">
+          <SheetHeader className="shrink-0 border-b border-border p-4">
             <SheetTitle className="flex items-center gap-2 text-sm font-black uppercase tracking-wide">
               <ShoppingBag className="h-5 w-5 text-primary" /> Seu pedido
             </SheetTitle>
           </SheetHeader>
-          <div className="flex-1 min-h-0">
+          <div className="flex-1 min-h-0 relative">
             <Cart onEditar={editarItem} onEnviado={() => setCarrinhoMobile(false)} />
           </div>
         </SheetContent>
