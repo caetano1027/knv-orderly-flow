@@ -65,6 +65,7 @@ export function statusLoja(agora = new Date()) {
   if (dia === 1) {
     return { 
       aberta: false, 
+      dia: 1,
       texto: "🔴 ESTAMOS FECHADOS HOJE",
       subtexto: "A KNV não funciona às segundas-feiras.",
       proximaAbertura: "Voltamos amanhã às 18h.",
@@ -72,7 +73,7 @@ export function statusLoja(agora = new Date()) {
     };
   }
 
-  if (!faixa) return { aberta: false, texto: "🔴 ESTAMOS FECHADOS", subtexto: "", proximaAbertura: "Voltamos em breve.", botaoTexto: "📅 PEDIR PARA DEPOIS" };
+  if (!faixa) return { aberta: false, dia, texto: "🔴 ESTAMOS FECHADOS", subtexto: "", proximaAbertura: "Voltamos em breve.", botaoTexto: "📅 PEDIR PARA DEPOIS" };
 
   const abreMin = minutos(faixa.abre);
   const fechaMin = minutos(faixa.fecha);
@@ -80,6 +81,7 @@ export function statusLoja(agora = new Date()) {
   if (totalMinutos >= abreMin && totalMinutos < fechaMin) {
     return {
       aberta: true,
+      dia,
       texto: "🟢 ESTAMOS ABERTOS",
       subtexto: `Pizza: ${faixa.abre.replace(":", "h")} às ${faixa.fecha.replace(":", "h")}`,
       botaoTexto: "ENVIAR PEDIDO PELO WHATSAPP"
@@ -90,6 +92,7 @@ export function statusLoja(agora = new Date()) {
   if (totalMinutos < abreMin) {
     return {
       aberta: false,
+      dia,
       texto: "🔴 ESTAMOS FECHADOS",
       subtexto: `Abrimos hoje às ${faixa.abre.split(":")[0]}h.`,
       proximaAbertura: `Abriremos hoje às ${faixa.abre.split(":")[0]}h.`,
@@ -101,6 +104,7 @@ export function statusLoja(agora = new Date()) {
   const proximoDiaEhSegunda = (dia + 1) % 7 === 1;
   return {
     aberta: false,
+    dia,
     texto: "🔴 ESTAMOS FECHADOS",
     subtexto: "Voltamos amanhã às 18h.",
     proximaAbertura: "Voltamos amanhã às 18h.",
@@ -114,4 +118,3 @@ export function horariosFormatados() {
     texto: faixa ? `${faixa.abre} às ${faixa.fecha}` : "Fechado",
   }));
 }
-
