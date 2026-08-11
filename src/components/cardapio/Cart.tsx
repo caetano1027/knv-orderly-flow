@@ -81,7 +81,7 @@ export function Cart({
   const status = useMemo(() => statusLoja(), []);
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col overflow-hidden">
       <div className="esconder-scroll flex-1 overflow-y-auto p-4">
         {itens.length === 0 ? (
           <div className="flex h-full min-h-48 flex-col items-center justify-center gap-3 text-center">
