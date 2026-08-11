@@ -6,7 +6,7 @@ import { SuccessToast } from "../ui/SuccessToast";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
 import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
-import { store } from "@/config/store";
+import { statusLoja, store } from "@/config/store";
 import { brl } from "@/lib/format";
 import { precoItem, useCart, type CartItem } from "@/lib/cart";
 import {
@@ -77,6 +77,8 @@ export function Cart({
 
   const setEndereco = (campo: keyof typeof enderecoVazio, valor: string) =>
     setCliente((c) => ({ ...c, endereco: { ...c.endereco, [campo]: valor } }));
+
+  const status = useMemo(() => statusLoja(), []);
 
   return (
     <div className="flex h-full flex-col">
@@ -333,6 +335,16 @@ export function Cart({
       </div>
 
       <div className="shrink-0 border-t border-border bg-card p-4">
+        {!status.aberta && (
+          <div className="mb-4 rounded-xl bg-destructive/10 p-3 text-center border border-destructive/20">
+            <p className="text-sm font-bold text-destructive">{status.texto.replace("ESTAMOS ", "A KNV está ")}</p>
+            <p className="text-[11px] text-muted-foreground mt-0.5">{status.subtexto || status.proximaAbertura}</p>
+            {status.proximaAbertura ? (
+              <p className="text-[11px] text-muted-foreground">{status.proximaAbertura}</p>
+            ) : null}
+          </div>
+        )}
+
         <div className="space-y-1 text-sm">
           <Linha label={`Subtotal (${totalItens} ${totalItens === 1 ? "item" : "itens"})`} valor={brl(subtotal)} />
           <Linha label="Entrega" valor={cliente.tipo === "retirada" ? "Retirada" : brl(entrega)} />
@@ -341,6 +353,7 @@ export function Cart({
             <span className="text-accent tabular-nums">{brl(total)}</span>
           </div>
         </div>
+        
         <motion.button
           type="button"
           onClick={enviar}
@@ -348,7 +361,7 @@ export function Cart({
           whileTap={{ scale: 0.98 }}
           className="gradiente-fogo mt-3 flex w-full items-center justify-center rounded-xl px-5 py-4 text-base font-bold text-primary-foreground shadow-lg transition-all active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Enviar Pedido pelo WhatsApp
+          {status.aberta ? "Enviar Pedido pelo WhatsApp" : (status.botaoTexto || "Enviar Pedido pelo WhatsApp")}
         </motion.button>
         <p className="mt-2 text-center text-[11px] text-muted-foreground">
           Prazo estimado: {store.prazoEstimado}
