@@ -339,7 +339,7 @@ export function Cart({
           <div className="mb-4 rounded-xl bg-destructive/10 p-3 text-center border border-destructive/20">
             <p className="text-sm font-bold text-destructive">{status.texto.replace("ESTAMOS ", "A KNV está ")}</p>
             <p className="text-[11px] text-muted-foreground mt-0.5">{status.subtexto || status.proximaAbertura}</p>
-            {status.dia === 1 || status.proximaAbertura ? (
+            {status.proximaAbertura ? (
               <p className="text-[11px] text-muted-foreground">{status.proximaAbertura}</p>
             ) : null}
           </div>
