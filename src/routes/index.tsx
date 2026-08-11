@@ -147,7 +147,7 @@ function Cardapio() {
               </span>
             </div>
             {status.subtexto && (
-              <p className="text-xs font-medium text-muted-foreground">
+              <p className="text-sm font-medium text-foreground">
                 {status.subtexto}
               </p>
             )}

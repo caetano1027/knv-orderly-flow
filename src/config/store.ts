@@ -83,7 +83,7 @@ export function statusLoja(agora = new Date()) {
       aberta: true,
       dia,
       texto: "🟢 ESTAMOS ABERTOS",
-      subtexto: `Abertos das ${faixa.abre.replace(":", "h")} até às ${faixa.fecha.replace(":", "h")}`,
+      subtexto: `Abertos das ${faixa.abre.replace(":", "h00")} até às ${faixa.fecha.replace(":", "h00")}`,
       botaoTexto: "ENVIAR PEDIDO PELO WHATSAPP"
     };
   }
