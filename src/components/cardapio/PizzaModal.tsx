@@ -315,7 +315,7 @@ function Opcao({
         {ativo ? <Check className="h-3.5 w-3.5 text-primary-foreground" /> : null}
       </span>
       <span className="min-w-0 flex-1 space-y-0.5">
-        <span className="block truncate text-sm font-bold text-foreground">{titulo}</span>
+        <span className="block line-clamp-2 text-sm font-bold text-foreground sm:truncate">{titulo}</span>
         {subtitulo ? (
           <span className="block line-clamp-2 text-xs text-muted-foreground">{subtitulo}</span>
         ) : null}
