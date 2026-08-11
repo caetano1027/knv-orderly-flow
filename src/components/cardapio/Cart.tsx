@@ -334,7 +334,7 @@ export function Cart({
         ) : null}
       </div>
 
-      <div className="shrink-0 border-t border-border bg-card p-4">
+      <div className="shrink-0 border-t border-border bg-card p-4 sm:rounded-b-3xl">
         {!status.aberta && (
           <div className="mb-4 rounded-xl bg-destructive/10 p-3 text-center border border-destructive/20">
             <p className="text-sm font-bold text-destructive">{status.texto.replace("ESTAMOS ", "A KNV está ")}</p>
