@@ -79,7 +79,7 @@ export function BebidaModal({ aberto, onFechar, bebidaId, itemEdicao, onConfirma
 
           <div className="custom-scroll flex-1 overflow-y-auto overflow-x-hidden -mt-10 px-5 pb-6">
             <DialogHeader className="relative space-y-1 text-left z-10">
-              <DialogTitle className="text-2xl font-black text-foreground drop-shadow-sm">{bebida.nome}</DialogTitle>
+              <DialogTitle className="text-2xl font-black text-foreground drop-shadow-sm line-clamp-2">{bebida.nome}</DialogTitle>
               <DialogDescription className="text-sm text-muted-foreground bg-card/60 backdrop-blur-sm p-2 rounded-lg -mx-2">
                 {bebida.descricao}
               </DialogDescription>
