@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { MapPin, Pencil, ShoppingBag, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -35,6 +35,20 @@ export function Cart({
     precisaTroco: false,
     trocoPara: "",
   });
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollParaBaixo = () => {
+    // Pequeno delay para esperar a animação do Framer Motion começar/terminar
+    setTimeout(() => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTo({
+          top: scrollContainerRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  };
 
   const entrega = cliente.tipo === "entrega" && itens.length ? store.taxaEntrega : 0;
   const total = subtotal + entrega;
@@ -82,7 +96,7 @@ export function Cart({
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      <div className="esconder-scroll flex-1 overflow-y-auto p-4">
+      <div ref={scrollContainerRef} className="esconder-scroll flex-1 overflow-y-auto p-4">
         {itens.length === 0 ? (
           <div className="flex h-full min-h-48 flex-col items-center justify-center gap-3 text-center">
             <ShoppingBag className="h-10 w-10 text-muted-foreground" />
@@ -281,7 +295,10 @@ export function Cart({
                   <Pill
                     key={p}
                     ativo={cliente.pagamento === p}
-                    onClick={() => setCliente((c) => ({ ...c, pagamento: p }))}
+                    onClick={() => {
+                      setCliente((c) => ({ ...c, pagamento: p }));
+                      if (p === "Dinheiro") scrollParaBaixo();
+                    }}
                   >
                     {p}
                   </Pill>
@@ -301,7 +318,10 @@ export function Cart({
                     <div className="grid grid-cols-2 gap-2">
                       <Pill
                         ativo={cliente.precisaTroco}
-                        onClick={() => setCliente((c) => ({ ...c, precisaTroco: true }))}
+                        onClick={() => {
+                          setCliente((c) => ({ ...c, precisaTroco: true }));
+                          scrollParaBaixo();
+                        }}
                       >
                         Sim
                       </Pill>
