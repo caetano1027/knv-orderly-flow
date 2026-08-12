@@ -110,7 +110,7 @@ function Cardapio() {
 
   return (
     <div className="min-h-screen bg-background pb-32 lg:pb-0">
-      <header className="relative h-56 w-full overflow-hidden sm:h-64 lg:h-72">
+      <header className="relative h-56 w-full overflow-hidden sm:h-72 lg:h-72">
         <img
           src={heroBanner}
           alt="Pizza artesanal saindo do forno a lenha"
