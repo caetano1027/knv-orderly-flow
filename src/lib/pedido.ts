@@ -148,5 +148,11 @@ export function montarMensagem(
 }
 
 export function linkWhatsApp(mensagem: string) {
-  return `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+  const text = encodeURIComponent(mensagem);
+  const phone = store.whatsapp;
+  
+  // No mobile, api.whatsapp.com ou wa.me costumam funcionar melhor para forçar o app.
+  // wa.me/{phone}?text={text} é o padrão moderno que funciona bem em ambos.
+  // Alguns dispositivos Android antigos ou configurações específicas de navegador podem preferir api.whatsapp.com
+  return `https://api.whatsapp.com/send?phone=${phone}&text=${text}`;
 }
