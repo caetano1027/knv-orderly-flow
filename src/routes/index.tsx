@@ -135,28 +135,28 @@ function Cardapio() {
               transition={{ duration: 0.5, delay: 0.2 }}
             />
           </div>
-          <h1 className="text-lg font-black leading-tight text-foreground sm:text-2xl lg:text-3xl">
+          <h1 className="text-xl font-black leading-tight text-foreground sm:text-3xl lg:text-4xl">
             {store.nome}
           </h1>
-          <p className="mt-0.5 text-[10px] text-muted-foreground sm:text-xs">{store.slogan}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground sm:text-sm">{store.slogan}</p>
           <div className="mt-2 flex flex-col items-start gap-1 sm:mt-3 sm:gap-1.5">
             <div className="flex items-center gap-1.5">
               <span className={`h-2 w-2 rounded-full ${status.aberta ? "bg-emerald-400 sombra-glow" : "bg-destructive"}`} />
-              <span className={`text-[10px] font-black uppercase tracking-wider sm:text-xs ${status.aberta ? "text-emerald-400" : "text-destructive"}`}>
+              <span className={`text-xs font-black uppercase tracking-wider ${status.aberta ? "text-emerald-400" : "text-destructive"}`}>
                 {status.texto}
               </span>
             </div>
             <div className="mt-1 flex flex-wrap gap-1.5">
               {status.subtexto && (
-                <Badge className="bg-secondary px-2 py-0.5 text-[9px] text-muted-foreground sm:text-[10px]">
+                <Badge className="bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground sm:text-[11px]">
                   {status.subtexto}
                 </Badge>
               )}
-              <Badge className="bg-secondary px-2 py-0.5 text-[9px] text-muted-foreground sm:text-[10px]">
-                <Clock className="h-2.5 w-2.5" /> {store.prazoEstimado}
+              <Badge className="bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground sm:text-[11px]">
+                <Clock className="h-3 w-3" /> {store.prazoEstimado}
               </Badge>
-              <Badge className="bg-secondary px-2 py-0.5 text-[9px] text-muted-foreground sm:text-[10px]">
-                <Star className="h-2.5 w-2.5 text-accent" /> Entrega {brl(store.taxaEntrega)}
+              <Badge className="bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground sm:text-[11px]">
+                <Star className="h-3 w-3 text-accent" /> Entrega {brl(store.taxaEntrega)}
               </Badge>
             </div>
           </div>
