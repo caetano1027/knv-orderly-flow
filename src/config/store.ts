@@ -68,12 +68,12 @@ export function statusLoja(agora = new Date()) {
       dia: 1,
       texto: "🔴 ESTAMOS FECHADOS HOJE",
       subtexto: "A KNV não funciona às segundas-feiras.",
-      proximaAbertura: "Voltamos amanhã às 18h.",
+      proximaAbertura: "Abrirá na terça às 18:00",
       botaoTexto: "📅 PEDIR PARA TERÇA-FEIRA"
     };
   }
 
-  if (!faixa) return { aberta: false, dia, texto: "🔴 ESTAMOS FECHADOS", subtexto: "", proximaAbertura: "Voltamos em breve.", botaoTexto: "📅 PEDIR PARA DEPOIS" };
+  if (!faixa) return { aberta: false, dia, texto: "🔴 ESTAMOS FECHADOS", subtexto: "", proximaAbertura: "Abrirá às 18:00", botaoTexto: "📅 PEDIR PARA DEPOIS" };
 
   const abreMin = minutos(faixa.abre);
   const fechaMin = minutos(faixa.fecha);
@@ -95,7 +95,7 @@ export function statusLoja(agora = new Date()) {
       dia,
       texto: "🔴 ESTAMOS FECHADOS",
       subtexto: `Abrimos hoje às ${faixa.abre.split(":")[0]}h.`,
-      proximaAbertura: `Abriremos hoje às ${faixa.abre.split(":")[0]}h.`,
+      proximaAbertura: "Abrirá hoje às 18:00",
       botaoTexto: `📅 PEDIR PARA HOJE ÀS ${faixa.abre.split(":")[0]}H`
     };
   }
@@ -107,7 +107,7 @@ export function statusLoja(agora = new Date()) {
     dia,
     texto: "🔴 ESTAMOS FECHADOS",
     subtexto: "Voltamos amanhã às 18h.",
-    proximaAbertura: "Voltamos amanhã às 18h.",
+    proximaAbertura: proximoDiaEhSegunda ? "Abrirá na terça às 18:00" : "Abrirá amanhã às 18:00",
     botaoTexto: proximoDiaEhSegunda ? "📅 PEDIR PARA TERÇA-FEIRA" : "📅 PEDIR PARA AMANHÃ"
   };
 }
