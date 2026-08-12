@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { SuccessToast } from "../ui/SuccessToast";
 import { Input } from "@/components/ui/input";
 import { QuantityStepper } from "./QuantityStepper";
+import { WhatsAppOrderTransition } from "./WhatsAppOrderTransition";
 import { getBebida, getBorda, getEsfiha, getSabor, getTamanho } from "@/config/menu";
 import { statusLoja, store } from "@/config/store";
 import { brl } from "@/lib/format";
@@ -26,6 +27,7 @@ export function Cart({
   onEnviado?: () => void;
 }) {
   const { itens, subtotal, totalItens, mudarQuantidade, remover, limpar } = useCart();
+  const [enviando, setEnviando] = useState(false);
   const [cliente, setCliente] = useState<DadosCliente>({
     nome: "",
     telefone: "",
@@ -75,18 +77,24 @@ export function Cart({
 
   const enviar = () => {
     if (!podeEnviar) return;
+    setEnviando(true);
     const numero = proximoNumeroPedido();
     const mensagem = montarMensagem(itens, cliente, { subtotal, entrega, total }, numero);
-    window.open(linkWhatsApp(mensagem), "_blank", "noopener,noreferrer");
-    toast.custom((t) => (
-      <SuccessToast 
-        title={`Pedido nº ${numero}`}
-        description="Enviado para o WhatsApp com sucesso!"
-        onClose={() => toast.dismiss(t)}
-      />
-    ));
-    limpar();
-    onEnviado?.();
+    
+    // Pequeno delay para mostrar a transição premium antes de abrir o WhatsApp
+    setTimeout(() => {
+      window.open(linkWhatsApp(mensagem), "_blank", "noopener,noreferrer");
+      toast.custom((t) => (
+        <SuccessToast 
+          title={`Pedido nº ${numero}`}
+          description="Enviado para o WhatsApp com sucesso!"
+          onClose={() => toast.dismiss(t)}
+        />
+      ));
+      limpar();
+      onEnviado?.();
+      // Não resetamos setEnviando(false) pois o carrinho será fechado/limpo
+    }, 1500);
   };
 
   const setEndereco = (campo: keyof typeof enderecoVazio, valor: string) =>
@@ -96,8 +104,10 @@ export function Cart({
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      <div ref={scrollContainerRef} className="esconder-scroll flex-1 overflow-y-auto p-4">
-        {itens.length === 0 ? (
+      <div ref={scrollContainerRef} className="esconder-scroll flex-1 overflow-y-auto overflow-x-hidden p-4">
+        {enviando ? (
+          <WhatsAppOrderTransition />
+        ) : itens.length === 0 ? (
           <div className="flex h-full min-h-48 flex-col items-center justify-center gap-3 text-center">
             <ShoppingBag className="h-10 w-10 text-muted-foreground" />
             <p className="text-sm text-muted-foreground">
