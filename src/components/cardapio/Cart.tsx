@@ -90,33 +90,24 @@ export function Cart({
 
   const enviar = () => {
     if (!podeEnviar) return;
-    setEnviando(true);
     const numero = proximoNumeroPedido();
     const mensagem = montarMensagem(itens, cliente, { subtotal, entrega, total }, numero);
+    const url = linkWhatsApp(mensagem);
     
-    // Pequeno delay para mostrar a transição premium antes de abrir o WhatsApp
-    setTimeout(() => {
-      const url = linkWhatsApp(mensagem);
-      
-      // Tentativa de abrir diretamente por link de protocolo para forçar o app no mobile
-      // mas mantendo o fallback padrão
-      const a = document.createElement("a");
-      a.href = url;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.click();
+    // Abre o WhatsApp imediatamente
+    window.location.href = url;
 
-      toast.custom((t) => (
-        <SuccessToast 
-          title={`Pedido nº ${numero}`}
-          description="Enviado para o WhatsApp com sucesso!"
-          onClose={() => toast.dismiss(t)}
-        />
-      ));
-      limpar();
-      onEnviado?.();
-      // Não resetamos setEnviando(false) pois o carrinho será fechado/limpo
-    }, 1500);
+    toast.custom((t) => (
+      <SuccessToast 
+        title={`Pedido nº ${numero}`}
+        description="Enviado para o WhatsApp com sucesso!"
+        onClose={() => toast.dismiss(t)}
+      />
+    ));
+    
+    limpar();
+    onEnviado?.();
+    setEnviando(false);
   };
 
   const setEndereco = (campo: keyof typeof enderecoVazio, valor: string) =>
