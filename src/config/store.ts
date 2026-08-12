@@ -31,7 +31,7 @@ export const store = {
     6: null,
   } as Record<number, { abre: string; fecha: string } | null>,
   /** Permitir pedidos mesmo com a loja fechada */
-  aceitarPedidosFechado: true,
+  aceitarPedidosFechado: false,
   /** Formas de pagamento aceitas */
   pagamentos: ["PIX", "Cartão de Crédito", "Cartão de Débito", "Dinheiro"] as const,
 } as const;
