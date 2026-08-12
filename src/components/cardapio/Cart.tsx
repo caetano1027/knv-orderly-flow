@@ -357,11 +357,10 @@ export function Cart({
       <div className="shrink-0 border-t border-border bg-card p-4 sm:rounded-b-3xl">
         {!status.aberta && (
           <div className="mb-4 rounded-xl bg-destructive/10 p-3 text-center border border-destructive/20">
-            <p className="text-sm font-bold text-destructive">{status.texto.replace("ESTAMOS ", "A KNV está ")}</p>
-            <p className="text-[11px] text-muted-foreground mt-0.5">{status.subtexto || status.proximaAbertura}</p>
-            {status.proximaAbertura ? (
-              <p className="text-[11px] text-muted-foreground">{status.proximaAbertura}</p>
-            ) : null}
+            <p className="text-sm font-bold text-destructive">{status.texto}</p>
+            {status.subtexto && (
+              <p className="text-[11px] text-muted-foreground mt-0.5">{status.subtexto}</p>
+            )}
           </div>
         )}
 
