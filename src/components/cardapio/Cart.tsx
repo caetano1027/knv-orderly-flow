@@ -96,7 +96,16 @@ export function Cart({
     
     // Pequeno delay para mostrar a transição premium antes de abrir o WhatsApp
     setTimeout(() => {
-      window.open(linkWhatsApp(mensagem), "_blank", "noopener,noreferrer");
+      const url = linkWhatsApp(mensagem);
+      
+      // Tentativa de abrir diretamente por link de protocolo para forçar o app no mobile
+      // mas mantendo o fallback padrão
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.click();
+
       toast.custom((t) => (
         <SuccessToast 
           title={`Pedido nº ${numero}`}
