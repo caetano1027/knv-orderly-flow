@@ -44,10 +44,23 @@ export function Cart({
     // Pequeno delay para esperar a animação do Framer Motion começar/terminar
     setTimeout(() => {
       if (scrollContainerRef.current) {
+        // Para mobile, garantimos que o scroll chegue ao final considerando o teclado ou viewport reduzida
+        const scrollHeight = scrollContainerRef.current.scrollHeight;
         scrollContainerRef.current.scrollTo({
-          top: scrollContainerRef.current.scrollHeight,
+          top: scrollHeight,
           behavior: "smooth",
         });
+        
+        // Reforço para mobile: tenta novamente após um tempo ligeiramente maior
+        // caso o teclado tenha alterado o layout
+        setTimeout(() => {
+          if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTo({
+              top: scrollContainerRef.current.scrollHeight,
+              behavior: "smooth",
+            });
+          }
+        }, 300);
       }
     }, 100);
   };
