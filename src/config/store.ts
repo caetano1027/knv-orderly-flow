@@ -22,13 +22,13 @@ export const store = {
    * null = fechado. Use formato "HH:MM".
    */
   horarios: {
-    0: null,
+    0: { abre: "18:00", fecha: "23:00" },
     1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-    6: null,
+    2: { abre: "18:00", fecha: "23:00" },
+    3: { abre: "18:00", fecha: "23:00" },
+    4: { abre: "18:00", fecha: "23:00" },
+    5: { abre: "18:00", fecha: "23:00" },
+    6: { abre: "18:00", fecha: "23:00" },
   } as Record<number, { abre: string; fecha: string } | null>,
   /** Permitir pedidos mesmo com a loja fechada */
   aceitarPedidosFechado: true,
