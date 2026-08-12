@@ -78,16 +78,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "KNV Cozinha de Fogo" },
+      { title: "KNV Cozinha de Fogo — Pizza Delivery e Esfiha Artesanal" },
       {
         name: "description",
-        content: "Pizzas na brasa e esfihas artesanais com pedido pelo WhatsApp.",
+        content: "Peça pizza delivery e esfiha artesanal no KNV Cozinha de Fogo. Monte seu pedido online e finalize pelo WhatsApp em minutos.",
       },
       { name: "author", content: "KNV Cozinha de Fogo" },
-      { property: "og:title", content: "KNV Cozinha de Fogo" },
+      { property: "og:title", content: "KNV Cozinha de Fogo — Pizza Delivery e Esfiha Artesanal" },
       {
         property: "og:description",
-        content: "Pizzas na brasa e esfihas artesanais com pedido pelo WhatsApp.",
+        content: "Peça pizza delivery e esfiha artesanal no KNV Cozinha de Fogo. Monte seu pedido online e finalize pelo WhatsApp em minutos.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
