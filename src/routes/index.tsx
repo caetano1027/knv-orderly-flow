@@ -110,7 +110,7 @@ function Cardapio() {
 
   return (
     <div className="min-h-screen bg-background pb-32 lg:pb-0">
-      <header className="relative h-48 w-full overflow-hidden sm:h-64 lg:h-80">
+      <header className="relative h-56 w-full overflow-hidden sm:h-64 lg:h-72">
         <img
           src={heroBanner}
           alt="Pizza artesanal saindo do forno a lenha"
@@ -123,23 +123,23 @@ function Cardapio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-4 sm:pb-6"
+          className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-2 sm:pb-4"
         >
           <div className="flex flex-col items-start gap-1">
             <motion.img
               src={logoAsset.url}
               alt="KNV Cozinha de Fogo Logo"
-              className="h-16 w-auto sm:h-24"
+              className="h-14 w-auto sm:h-20"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             />
           </div>
-          <h1 className="text-2xl font-black leading-tight text-foreground sm:text-4xl">
+          <h1 className="text-xl font-black leading-tight text-foreground sm:text-3xl lg:text-4xl">
             {store.nome}
           </h1>
           <p className="mt-0.5 text-xs text-muted-foreground sm:text-sm">{store.slogan}</p>
-          <div className="mt-3 flex flex-col items-start gap-1.5">
+          <div className="mt-2 flex flex-col items-start gap-1 sm:mt-3 sm:gap-1.5">
             <div className="flex items-center gap-2">
               <span className={`h-2.5 w-2.5 rounded-full ${status.aberta ? "bg-emerald-400 sombra-glow" : "bg-destructive"}`} />
               <span className={`text-sm font-black uppercase tracking-wider ${status.aberta ? "text-emerald-400" : "text-destructive"}`}>
