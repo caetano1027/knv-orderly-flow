@@ -22,9 +22,9 @@ import {
 import heroBanner from "@/assets/hero-banner.jpg";
 import logoAsset from "@/assets/logo.png.asset.json";
 
-const titulo = `${store.nome} — Pizzas e Esfihas com entrega`;
+const titulo = "KNV Cozinha de Fogo — Pizza Delivery e Esfiha Artesanal";
 const descricao =
-  "Peça pizzas na brasa e esfihas artesanais do KNV Cozinha de Fogo. Monte seu pedido em segundos e finalize direto no WhatsApp.";
+  "Peça pizza delivery e esfiha artesanal no KNV Cozinha de Fogo. Monte seu pedido online e finalize pelo WhatsApp em minutos.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
