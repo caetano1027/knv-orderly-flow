@@ -147,7 +147,7 @@ function Cardapio() {
               </span>
             </div>
             <div className="mt-1 flex flex-wrap gap-1.5 sm:gap-2">
-              {status.subtexto && (
+              {status.aberta && status.subtexto && (
                 <Badge className="bg-secondary px-2.5 py-1 text-[11px] text-muted-foreground sm:text-xs">
                   {status.subtexto}
                 </Badge>
