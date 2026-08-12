@@ -31,7 +31,7 @@ export const store = {
     6: { abre: "18:00", fecha: "23:00" },
   } as Record<number, { abre: string; fecha: string } | null>,
   /** Permitir pedidos mesmo com a loja fechada */
-  aceitarPedidosFechado: false,
+  aceitarPedidosFechado: true,
   /** Formas de pagamento aceitas */
   pagamentos: ["PIX", "Cartão de Crédito", "Cartão de Débito", "Dinheiro"] as const,
 } as const;
@@ -60,6 +60,17 @@ export function statusLoja(agora = new Date()) {
   const h = agora.getHours();
   const m = agora.getMinutes();
   const totalMinutos = h * 60 + m;
+
+  // Se estiver configurado para aceitar pedidos mesmo fechado, forçamos o status "Aberto"
+  if (store.aceitarPedidosFechado) {
+    return {
+      aberta: true,
+      dia,
+      texto: "🟢 ESTAMOS ABERTOS",
+      subtexto: faixa ? `Abertos das ${faixa.abre} até às ${faixa.fecha}` : "Abertos para pedidos",
+      botaoTexto: "ENVIAR PEDIDO PELO WHATSAPP"
+    };
+  }
 
   // Segunda-feira (1)
   if (dia === 1) {
