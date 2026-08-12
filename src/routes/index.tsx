@@ -56,7 +56,7 @@ function Cardapio() {
   const [bebidaId, setBebidaId] = useState<string | null>(null);
   const [bebidaEdicao, setBebidaEdicao] = useState<BebidaItem | null>(null);
   const [carrinhoMobile, setCarrinhoMobile] = useState(false);
-  const [status, setStatus] = useState<{ aberta: boolean; texto: string; subtexto?: string }>({ aberta: false, texto: "" });
+  const [status, setStatus] = useState<{ aberta: boolean; texto: string; subtexto?: string; proximaAbertura?: string }>({ aberta: false, texto: "" });
 
   useEffect(() => {
     setStatus(statusLoja());
@@ -155,6 +155,11 @@ function Cardapio() {
               <Badge className="bg-secondary px-2.5 py-1 text-[11px] text-muted-foreground sm:text-xs">
                 <Clock className="h-3.5 w-3.5" /> {store.prazoEstimado}
               </Badge>
+              {!status.aberta && status.proximaAbertura && (
+                <Badge className="bg-secondary px-2.5 py-1 text-[11px] text-muted-foreground sm:text-xs">
+                  <Clock className="h-3.5 w-3.5" /> {status.proximaAbertura}
+                </Badge>
+              )}
               <Badge className="bg-secondary px-2.5 py-1 text-[11px] text-muted-foreground sm:text-xs">
                 <Star className="h-3.5 w-3.5 text-accent" /> Entrega {brl(store.taxaEntrega)}
               </Badge>

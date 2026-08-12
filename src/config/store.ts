@@ -22,13 +22,13 @@ export const store = {
    * null = fechado. Use formato "HH:MM".
    */
   horarios: {
-    0: null,
+    0: { abre: "18:00", fecha: "23:00" },
     1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-    6: null,
+    2: { abre: "18:00", fecha: "23:00" },
+    3: { abre: "18:00", fecha: "23:00" },
+    4: { abre: "18:00", fecha: "23:00" },
+    5: { abre: "18:00", fecha: "23:00" },
+    6: { abre: "18:00", fecha: "23:00" },
   } as Record<number, { abre: string; fecha: string } | null>,
   /** Permitir pedidos mesmo com a loja fechada */
   aceitarPedidosFechado: true,
@@ -68,12 +68,12 @@ export function statusLoja(agora = new Date()) {
       dia: 1,
       texto: "🔴 ESTAMOS FECHADOS HOJE",
       subtexto: "A KNV não funciona às segundas-feiras.",
-      proximaAbertura: "Voltamos amanhã às 18h.",
+      proximaAbertura: "Abrirá na terça às 18:00",
       botaoTexto: "📅 PEDIR PARA TERÇA-FEIRA"
     };
   }
 
-  if (!faixa) return { aberta: false, dia, texto: "🔴 ESTAMOS FECHADOS", subtexto: "", proximaAbertura: "Voltamos em breve.", botaoTexto: "📅 PEDIR PARA DEPOIS" };
+  if (!faixa) return { aberta: false, dia, texto: "🔴 ESTAMOS FECHADOS", subtexto: "", proximaAbertura: "Abrirá às 18:00", botaoTexto: "📅 PEDIR PARA DEPOIS" };
 
   const abreMin = minutos(faixa.abre);
   const fechaMin = minutos(faixa.fecha);
@@ -95,7 +95,7 @@ export function statusLoja(agora = new Date()) {
       dia,
       texto: "🔴 ESTAMOS FECHADOS",
       subtexto: `Abrimos hoje às ${faixa.abre.split(":")[0]}h.`,
-      proximaAbertura: `Abriremos hoje às ${faixa.abre.split(":")[0]}h.`,
+      proximaAbertura: "Abrirá hoje às 18:00",
       botaoTexto: `📅 PEDIR PARA HOJE ÀS ${faixa.abre.split(":")[0]}H`
     };
   }
@@ -107,7 +107,7 @@ export function statusLoja(agora = new Date()) {
     dia,
     texto: "🔴 ESTAMOS FECHADOS",
     subtexto: "Voltamos amanhã às 18h.",
-    proximaAbertura: "Voltamos amanhã às 18h.",
+    proximaAbertura: proximoDiaEhSegunda ? "Abrirá na terça às 18:00" : "Abrirá amanhã às 18:00",
     botaoTexto: proximoDiaEhSegunda ? "📅 PEDIR PARA TERÇA-FEIRA" : "📅 PEDIR PARA AMANHÃ"
   };
 }
